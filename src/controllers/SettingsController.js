@@ -1,4 +1,16 @@
 import Settings from '../models/Settings';
+import cloudinary from 'cloudinary';
+import fs from 'fs-extra';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
+
 
 export default {
     addSettings: async (req, res, next) => {
@@ -38,7 +50,9 @@ export default {
                 { _id: req.body._id },
                 {
                     aboutInfo: req.body.aboutInfo,
-                    companyName: req.body.companyName
+                    companyName: req.body.companyName,
+                    companyPhone: req.body.companyPhone,
+                    companyEmail: req.body.companyEmail
                 }
             );
             res.status(200).json(reg);
@@ -87,6 +101,56 @@ export default {
                     }
                 }
             );
+            res.status(200).json(reg);
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message: 'Ocurrió un error'
+            });
+            next();
+        }
+    },
+    updateLogo: async (req, res, next) => {
+        try {
+
+            const result = await cloudinary.uploader.upload(req.file.path);
+
+            const reg = await Settings.findByIdAndUpdate(
+                { _id: req.body._id },
+                {
+                    logoURL: {
+                        public_id: result.public_id,
+                        imageURL: result.url,
+                    }
+                }
+            );
+
+            await fs.unlink(req.file.path);
+
+            res.status(200).json(reg);
+
+        } catch (error) {
+            console.log(error);
+            res.status(500).json({
+                message: 'Ocurrió un error'
+            });
+            next();
+        }
+    },
+    deleteLogo: async (req, res, next) => {
+        try {
+
+            const reg = await Settings.findByIdAndUpdate(
+                { _id: req.body._id },
+                {
+                    logoURL: {
+                        public_id: "",
+                        imageURL: "",
+                    }
+                }
+            );
+
             res.status(200).json(reg);
 
         } catch (error) {

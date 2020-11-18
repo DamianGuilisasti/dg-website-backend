@@ -6,7 +6,7 @@ import SettingsRouter from './SettingsRouter';
 
 const router = express.Router();
 
-router.use('/publicaciones', PostsRouter);
+router.use('/posts', PostsRouter);
 router.use('/productos', ProductRouter);
 router.use('/user', UsersRouter);
 router.use('/settings', SettingsRouter);

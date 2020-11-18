@@ -44,6 +44,14 @@ const SettingSchema = new Schema({
         type: String,
         maxlength: 64
     },
+    companyPhone: {
+        type: Number,
+        maxlength: 64
+    },
+    companyEmail: {
+        type: String,
+        maxlength: 64
+    },
     whatsapp: {
         phone: {
             type: Number

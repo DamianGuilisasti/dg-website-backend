@@ -1,5 +1,5 @@
-import Publicaciones from './Publicaciones';
+import Posts from './Posts';
 
 export default {
-    Publicaciones
+    Posts
 }
