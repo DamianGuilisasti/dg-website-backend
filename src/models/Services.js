@@ -6,9 +6,6 @@ const ServicesSchema = new Schema({
         maxlength: 50,
         required: true
     },
-    totalSpend: {
-        type: Number
-    },
     price: {
         type: Number
     },

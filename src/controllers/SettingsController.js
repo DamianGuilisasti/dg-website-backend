@@ -15,9 +15,9 @@ cloudinary.config({
 export default {
     addSettings: async (req, res, next) => {
         try {
-            const { aboutInfo, companyName, socialMedia, contactInfo, logoURL } = req.body;
+            const { aboutInfo, companyName, socialMedia, contactInfo, logoURL, companyPhone, whatsapp, companyEmail } = req.body;
             const newConfiguration = new Settings({
-                aboutInfo, companyName, socialMedia, contactInfo, logoURL
+                aboutInfo, companyName, socialMedia, contactInfo, logoURL, companyPhone, whatsapp, companyEmail
             })
 
             const newConfigurationSaved = await newConfiguration.save();

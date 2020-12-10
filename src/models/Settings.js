@@ -42,15 +42,15 @@ const SettingSchema = new Schema({
     },
     companyName: {
         type: String,
-        maxlength: 64
+  
     },
     companyPhone: {
         type: Number,
-        maxlength: 64
+
     },
     companyEmail: {
         type: String,
-        maxlength: 64
+
     },
     whatsapp: {
         phone: {
