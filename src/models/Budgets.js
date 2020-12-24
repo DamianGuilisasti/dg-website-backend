@@ -3,12 +3,15 @@ import { Schema, model } from "mongoose";
 const BudgetSchema = new Schema(
   {
     client: {
+      type: Schema.Types.ObjectId,
+      ref: "Clients",
+    },
+    services: [
+      {
         type: Schema.Types.ObjectId,
-        ref: 'Clients'
-    },
-    total: {
-      type: Number,
-    },
+        ref: "Services",
+      },
+    ],
     state: {
       type: Number,
       default: 1,

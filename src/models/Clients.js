@@ -25,6 +25,9 @@ const ClientSchema = new Schema(
       type: Number,
       maxlength: 50,
     },
+    address: {
+      type: String,
+    },
     /*     services: [
       {
         service: {

@@ -4,15 +4,15 @@ import path from "path";
 const storage = multer.diskStorage({
   destination: path.join(__dirname, "../public/img/uploads"),
   filename: (req, file, cb) => {
-    cb(null, new Date().getTime() + path.extname(file.originalname));
+    cb(null, "Presupuesto.PDF"); //new Date().getTime() + path.extname(file.originalname)
   },
 });
 
-const upload = multer({
+const uploadPDF = multer({
   storage,
   limits: {
     fieldSize: 30 * 2048 * 2048,
   },
-}).single("image");
+}).single("file");
 
-export default upload;
+export default uploadPDF;

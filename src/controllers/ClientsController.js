@@ -36,9 +36,9 @@ export default {
       let value = req.query.value;
       const reg = await models.Clients.find().populate("services", {
         name: 1,
-        _id: 0,
+        _id: 1,
         price: 1,
-        text: 1,
+        description: 1,
       }); //tiene que ir en minúsuclas, no preguntes porque.. jeje
       //.populate('services').populate('service', { name: 1, _id: 0, price: 1 });
       res.status(200).json(reg);
@@ -51,8 +51,8 @@ export default {
   },
   add: async (req, res, next) => {
     try {
-      const { name, lastname, email, phone, services } = req.body;
-      const newClient = new Client({ name, lastname, email, phone, services });
+      const { name, lastname, email, phone, services, address } = req.body;
+      const newClient = new Client({ name, lastname, email, phone, services, address });
       const clientSaved = await newClient.save();
       res.status(200).json(clientSaved);
       //const reg = await models.Post.create(req.body);

@@ -1,34 +1,27 @@
-import jwt from 'jsonwebtoken';
-import config from '../config';
-import User from '../models/User';
+import jwt from "jsonwebtoken";
+import config from "../config";
+import User from "../models/User";
 
 export default {
+  verify: async (req, res, next) => {
+    try {
+      const token = req.headers.token;
 
-    verify: async (req, res, next) => {
+      if (!token) {
+        return res.status(403).send({
+          message: "No token",
+        });
+      }
 
-        try {
-            const token = req.headers.token;
+      const tokenDecoded = jwt.verify(token, config.SECRET);
 
-            if (!token) {
-                return res.status(403).send({
-                    message: 'No token'
-                });
-            }
+      const user = User.findById(tokenDecoded.id);
 
-            const tokenDecoded = jwt.verify(token, config.SECRET);
+      if (!user) return res.status(404).json({ message: "No user found" });
 
-            const user = User.findById(tokenDecoded.id);
-
-            if (!user) return res.status(404).json({ message: "No user found" });
-
-            next();
-
-        } catch (error) {
-            return res.status(401).json({ message: "No autorizado" });
-        }
-
-
-
+      next();
+    } catch (error) {
+      return res.status(401).json({ message: "No autorizado" });
     }
-}
-
+  },
+};

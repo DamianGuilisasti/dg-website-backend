@@ -1,25 +1,35 @@
-import { Schema, model } from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const ServicesSchema = new Schema({
+const ServicesSchema = new Schema(
+  {
     name: {
-        type: String,
-        maxlength: 50,
-        required: true
+      type: String,
+      maxlength: 50,
+      required: true,
     },
     price: {
-        type: Number
+      type: Number,
+    },
+    description: {
+      type: String,
+    },
+    serviceType: {
+      type: String,
+      enum: ["Mensual", "Anual", "Fijo"],
+      required: true,
+      default: 'Mensual'
     },
     state: {
-        type: Number,
-        default: 1
-    }
-},
-    {
-        timestamps: true,
-        collection: 'Services'
-    }
+      type: Number,
+      default: 1,
+    },
+  },
+  {
+    timestamps: true,
+    collection: "Services",
+  }
 );
 
-const Services = model('Services', ServicesSchema);
+const Services = model("Services", ServicesSchema);
 
 export default Services;
