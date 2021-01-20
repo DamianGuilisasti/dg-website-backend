@@ -1,9 +1,15 @@
 import { Schema, model } from "mongoose";
 
-const rolSchema = new Schema({
-  name: {
-    type: String,
+const rolSchema = new Schema(
+  {
+    name: {
+      type: String,
+    },
   },
-});
+  {
+    timestamps: true,
+    collection: "Roles",
+  }
+);
 
-export default model("rol", rolSchema);
+export default model("Rol", rolSchema);

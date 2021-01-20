@@ -11,7 +11,7 @@ export default {
     const roles = await Roles.find({ _id: { $in: user.rol } });
 
     for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "admin") {
+      if (roles[i].name === "Admin") {
         next();
         return;
       }
@@ -27,7 +27,7 @@ export default {
     const roles = await Roles.find({ _id: { $in: user.rol } });
 
     for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "client") {
+      if (roles[i].name === "Cliente") {
         next();
         return;
       }
@@ -37,8 +37,3 @@ export default {
   },
 };
 
-// obtener ID que viene del token (decodificar token).
-
-// consultar en la base de datos de usuarios, ese ID.
-
-// traerme ese usuario y chequear el rol.

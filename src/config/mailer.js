@@ -4,36 +4,54 @@ import path from "path";
 import moment from "moment";
 import http from "http";
 
-let logo = "";
-const SettingData = [];
+var logoURL = "";
+var whatsappURL = "";
+var linkedinURL = "";
+var instagramURL = "";
+var twitterURL = "";
 
 var url = {
   host: "localhost",
   port: 3000,
   path: "/api/settings/list",
+  method: "GET",
 };
-
-const httpGet = (url) => {
-  return new Promise((resolve, reject) => {
-    http
-      .get(url, (res) => {
-        res.setEncoding("utf8");
-        const body = [];
-        res.on("data", (chunk) => body.push(chunk));
-        console.log(body);
-        res.on("end", () => resolve(body.join("")));
-      })
-      .on("error", reject);
+http
+  .get(url, (resp) => {
+    let data = "";
+    // A chunk of data has been recieved.
+    resp.on("data", (chunk) => {
+      data += chunk;
+    });
+    // The whole response has been received. Print out the result.
+    resp.on("end", () => {
+      let bodyData = JSON.parse(data)[0];
+      showData(bodyData);
+    });
+  })
+  .on("error", (err) => {
+    console.log("Error: " + err.message);
   });
-};
 
-//logo = response.data[0].logoURL.imageURL;
+function showData(bodyData) {
+  logoURL = bodyData.logoURL.imageURL;
+  whatsappURL = bodyData.whatsapp.phone;
+  linkedinURL = bodyData.socialMedia.linkedin;
+  instagramURL = bodyData.socialMedia.instagram;
+  twitterURL = bodyData.socialMedia.twitter;
+}
 
-//import emailTemplate from '../template/email';
+function whatsapp() {
+  return (
+    "https://wa.me/" +
+    whatsappURL +
+    "?text=Hola Damián, te quería consultar lo siguiente: "
+  );
+}
 
 export const transporter = nodemailer.createTransport({
-  host: "mail.damianguilisasti.com.ar",
-  port: 25,
+  host: process.env.NODEMAILER_HOST,
+  port: process.env.NODEMAILER_PORT,
   secure: false,
   auth: {
     user: process.env.GMAIL_EMAIL,
@@ -67,22 +85,48 @@ export default {
       from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
       to: email,
       subject: "Presupuesto",
-      template: "email",
+      template: "budget",
       context: {
         user: name,
         year: moment(new Date()).format("YYYY"),
-        whatsappURL: "http://damianguilisasti.com.ar/facebook.png",
-        linkedinURL: "http://damianguilisasti.com.ar/facebook.png",
-        instagramURL: "http://damianguilisasti.com.ar/facebook.png",
-        websiteURL: "http://damianguilisasti.com.ar/facebook.png",
+        whatsappURL: whatsapp,
+        linkedinURL: linkedinURL,
+        instagramURL: instagramURL,
+        twitterURL: twitterURL,
+        websiteURL: "https://damianguilisasti.com.ar/",
         photoURL: "https://damianguilisasti.com.ar/damian.png",
-        logoURL:
-          "https://damianguilisasti.com.ar/wp-content/themes/chelsey/images/logo2.png",
+        logoURL: logoURL,
       },
       attachments: [
         {
           filename: "Presupuesto.PDF",
           path: path.join(__dirname, "../public/img/uploads/Presupuesto.PDF"),
+        },
+      ],
+    }),
+
+    sendBillManually: (email, name, subject) =>
+    transporter.sendMail({
+      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
+      to: email,
+      subject: subject,
+      template: "bill",
+      context: {
+        user: name,
+        year: moment(new Date()).format("YYYY"),
+        month: moment(new Date()).format("MM/YYYY"),
+        whatsappURL: whatsapp,
+        linkedinURL: linkedinURL,
+        instagramURL: instagramURL,
+        twitterURL: twitterURL,
+        websiteURL: "https://damianguilisasti.com.ar/",
+        photoURL: "https://damianguilisasti.com.ar/damian.png",
+        logoURL: logoURL,
+      },
+      attachments: [
+        {
+          filename: "Factura.PDF",
+          path: path.join(__dirname, "../public/img/uploads/Factura.PDF"),
         },
       ],
     }),

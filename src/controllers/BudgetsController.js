@@ -126,6 +126,22 @@ export default {
       next(error);
     }
   },
+  sendEmailManually: async (req, res, next) => {
+    try {
+      console.log(req.body);
+      await mailer.sendBillManually(req.body.email, req.body.name, req.body.subject);
+      await fs.unlink(req.file.path);
+      res.status(200).send({
+        message: "Email enviado",
+      });
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error.",
+      });
+
+      next(error);
+    }
+  },
   uploadPDF: async (req, res, next) => {
     try {
       await mailer.welcomeMail(req.body.email, req.body.name);

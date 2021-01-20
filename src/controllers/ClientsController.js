@@ -33,7 +33,7 @@ export default {
   }, */
   list: async (req, res, next) => {
     try {
-      let value = req.query.value;
+      //let value = req.query.value;
       const reg = await models.Clients.find().populate("services", {
         name: 1,
         _id: 1,
@@ -52,7 +52,14 @@ export default {
   add: async (req, res, next) => {
     try {
       const { name, lastname, email, phone, services, address } = req.body;
-      const newClient = new Client({ name, lastname, email, phone, services, address });
+      const newClient = new Client({
+        name,
+        lastname,
+        email,
+        phone,
+        services,
+        address,
+      });
       const clientSaved = await newClient.save();
       res.status(200).json(clientSaved);
       //const reg = await models.Post.create(req.body);
@@ -100,6 +107,36 @@ export default {
       const clientUpdated = await Client.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 0 },
+        { new: true }
+      );
+      res.status(200).json(clientUpdated);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error.",
+      });
+      next(error);
+    }
+  },
+  clientPaidById: async (req, res, next) => {
+    try {
+      const clientUpdated = await Client.findByIdAndUpdate(
+        { _id: req.body._id },
+        { isPaid: true },
+        { new: true }
+      );
+      res.status(200).json(clientUpdated);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error.",
+      });
+      next(error);
+    }
+  },
+  clientNotPaidById: async (req, res, next) => {
+    try {
+      const clientUpdated = await Client.findByIdAndUpdate(
+        { _id: req.body._id },
+        { isPaid: false },
         { new: true }
       );
       res.status(200).json(clientUpdated);

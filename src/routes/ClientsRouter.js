@@ -9,5 +9,7 @@ router.put("/update", ClientsController.updateClientById);
 router.put("/activate", ClientsController.activateClientById);
 router.put("/desactivate", ClientsController.desactivateClientById);
 router.delete("/delete", ClientsController.deleteClientById);
+router.put("/clientIsPaid", ClientsController.clientPaidById);
+router.put("/clientIsNotPaid", ClientsController.clientNotPaidById);
 
 export default router;
