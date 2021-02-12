@@ -24,9 +24,13 @@ export default {
         .status(401)
         .json({ token: null, message: "Contraseña incorrecta" });
 
-    const token = jwt.sign({ id: userFound._id }, config.SECRET, {
-      expiresIn: 86400,
-    });
+    const token = jwt.sign(
+      { id: userFound._id, rol: userFound.rol },
+      config.SECRET,
+      {
+        expiresIn: 86400,
+      }
+    );
 
     res.status(200).json({ token });
   },
@@ -109,7 +113,7 @@ export default {
       next();
     }
   },
-  update: async (req, res, next) => {
+  updateInEditAccount: async (req, res, next) => {
     try {
       const {
         email,
@@ -125,7 +129,7 @@ export default {
 
       console.log(userFound);
 
-/*       if (userFound.rol[0].name !== "Admin") {
+      /*       if (userFound.rol[0].name !== "Admin") {
         return res.status(401).json({ message: "No autorizado" });
       } */
 
@@ -147,6 +151,31 @@ export default {
           rol: rol,
           username: username,
           password: await User.encryptPassword(newpassword),
+        },
+        { new: true }
+      );
+
+      res.status(200).json(userUpdated);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error.",
+      });
+      next(error);
+    }
+  },
+  update: async (req, res, next) => {
+    try {
+      const { email, password, username, name, lastname, rol } = req.body;
+
+      const userUpdated = await User.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          name: name,
+          lastname: lastname,
+          email: email,
+          rol: rol,
+          username: username,
+          password: await User.encryptPassword(password),
         },
         { new: true }
       );

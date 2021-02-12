@@ -5,7 +5,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _Posts = _interopRequireDefault(require("../models/Posts"));
+var _Roles = _interopRequireDefault(require("../models/Roles"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
@@ -23,7 +23,7 @@ var _default = {
             case 0:
               _context.prev = 0;
               _context.next = 3;
-              return _Posts["default"].find();
+              return _Roles["default"].find();
 
             case 3:
               result = _context.sent;
@@ -35,7 +35,7 @@ var _default = {
               _context.prev = 7;
               _context.t0 = _context["catch"](0);
               res.status(500).send({
-                message: 'Ocurrió un error'
+                message: "Ocurrió un error"
               });
               next(_context.t0);
 
@@ -52,57 +52,6 @@ var _default = {
     }
 
     return list;
-  }(),
-  add: function () {
-    var _add = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(req, res, next) {
-      var _req$body, title, category, author, tags, newPost, postSaved;
-
-      return regeneratorRuntime.wrap(function _callee2$(_context2) {
-        while (1) {
-          switch (_context2.prev = _context2.next) {
-            case 0:
-              _context2.prev = 0;
-              console.log(req.body);
-              _req$body = req.body, title = _req$body.title, category = _req$body.category, author = _req$body.author, tags = _req$body.tags;
-              newPost = new _Posts["default"]({
-                title: title,
-                category: category,
-                author: author,
-                tags: tags
-              });
-              _context2.next = 6;
-              return newPost.save();
-
-            case 6:
-              postSaved = _context2.sent;
-              res.status(200).json(postSaved); //const reg = await models.Post.create(req.body);
-              //res.status(200).json(reg);
-
-              _context2.next = 15;
-              break;
-
-            case 10:
-              _context2.prev = 10;
-              _context2.t0 = _context2["catch"](0);
-              console.log(_context2.t0);
-              res.status(500).send({
-                message: 'Ocurrió un error'
-              });
-              next();
-
-            case 15:
-            case "end":
-              return _context2.stop();
-          }
-        }
-      }, _callee2, null, [[0, 10]]);
-    }));
-
-    function add(_x4, _x5, _x6) {
-      return _add.apply(this, arguments);
-    }
-
-    return add;
   }()
 };
 exports["default"] = _default;

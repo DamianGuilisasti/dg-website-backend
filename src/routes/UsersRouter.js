@@ -21,8 +21,13 @@ router.post(
   UserController.add
 );
 router.put(
+  "/updateInEditAccount",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  UserController.updateInEditAccount
+);
+router.put(
   "/update",
-  [verify.verifyToken.verify],
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   UserController.update
 );
 router.put(
