@@ -34,11 +34,13 @@ http
   });
 
 function showData(bodyData) {
-  logoURL = bodyData.logoURL.imageURL;
-  whatsappURL = bodyData.whatsapp.phone;
-  linkedinURL = bodyData.socialMedia.linkedin;
-  instagramURL = bodyData.socialMedia.instagram;
-  twitterURL = bodyData.socialMedia.twitter;
+  if (bodyData) {
+    logoURL = bodyData.logoURL.imageURL;
+    whatsappURL = bodyData.whatsapp.phone;
+    linkedinURL = bodyData.socialMedia.linkedin;
+    instagramURL = bodyData.socialMedia.instagram;
+    twitterURL = bodyData.socialMedia.twitter;
+  }
 }
 
 function whatsapp() {
@@ -105,7 +107,7 @@ export default {
       ],
     }),
 
-    sendBillManually: (email, name, subject) =>
+  sendBillManually: (email, name, subject) =>
     transporter.sendMail({
       from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
       to: email,

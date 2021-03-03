@@ -1,17 +1,41 @@
-import Roles from '../models/Roles';
+import Roles from "../models/Roles";
+import User from "../models/User";
 
-export const createRoles = async () => {
+export default {
+  createRoles: async () => {
     try {
-        const counter = await Roles.estimatedDocumentCount();
+      const counter = await Roles.estimatedDocumentCount();
 
-        if (counter > 0) return;
+      if (counter > 0) return;
 
-        const values = await Promise.all([
-            new Roles({ name: 'Cliente' }).save(),
-            new Roles({ name: 'Admin' }).save()])
+      const values = await Promise.all([
+        new Roles({ name: "Cliente" }).save(),
+        new Roles({ name: "Admin" }).save(),
+      ]);
 
-        console.log(values);
+      console.log(values);
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-}
+  },
+  createFirstUser: async () => {
+    try {
+      const counter = await User.estimatedDocumentCount();
+
+      if (counter > 0) return;
+
+      const rolId = await Roles.find({ name: { $in: "Admin" } });
+
+      const values = await Promise.all(
+        new User({
+          username: "DamianGuilisasti",
+          email: "damianguilisasti@gmail.com",
+          password: await User.encryptPassword("959688671dD"),
+          rol: rolId._id,
+        }).save()
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
+};

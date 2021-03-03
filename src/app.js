@@ -4,7 +4,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from "cors";
 import router from "./routes";
-import { createRoles } from "./libs/initialSetup";
+import initialSetup from "./libs/initialSetup";
 
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
@@ -17,7 +17,9 @@ require("./database");
 // Inicializations
 
 const app = express();
-createRoles();
+
+initialSetup.createRoles();
+initialSetup.createFirstUser();
 
 // Settings
 
