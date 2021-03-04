@@ -1,6 +1,11 @@
 import mongoose from "mongoose";
 
-const { MONGODB_HOST, MONGODB_DATABASE } = process.env;
+import AWS from 'aws-sdk';
+
+const MONGODB_HOST = AWS.StringParameter.valueFromLookup(this, 'MONGODB_HOST');
+const MONGODB_DATABASE = AWS.StringParameter.valueFromLookup(this, 'MONGODB_DATABASE');
+
+//const { MONGODB_HOST, MONGODB_DATABASE } = process.env;
 
 const MONGODB_URI = `mongodb://${MONGODB_HOST}/${MONGODB_DATABASE}`;
 
