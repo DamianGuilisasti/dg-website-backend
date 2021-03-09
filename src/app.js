@@ -18,12 +18,16 @@ require("./database");
 
 const app = express();
 
-initialSetup.createRoles();
-initialSetup.createFirstUser();
-
 // Settings
 
 app.set("port", process.env.PORT || 3000);
+
+async function start() {
+
+  await initialSetup.createRoles()
+  await initialSetup.createFirstUser()
+
+}
 
 // Middlewares
 
@@ -46,3 +50,5 @@ app.listen(app.get("port"), () => {
   console.log("Server on port: ", app.get("port"));
   console.log("Environment: ", process.env.NODE_ENV);
 });
+
+start()

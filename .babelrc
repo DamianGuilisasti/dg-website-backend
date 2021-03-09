@@ -1,7 +1,11 @@
 {
-    "presets": [
-        "@babel/preset-env"
-    ]
+  "presets": [
+    ["@babel/preset-env", {
+      "targets": {
+        "node": "8.10"
+      }
+    }]
+  ]
 }
 
 /* {
@@ -14,4 +18,3 @@
     ]
   } */
 
-  // cree los directorios.

@@ -12,8 +12,6 @@ export default {
         new Roles({ name: "Cliente" }).save(),
         new Roles({ name: "Admin" }).save(),
       ]);
-
-      console.log(values);
     } catch (error) {
       console.log(error);
     }
@@ -26,12 +24,18 @@ export default {
 
       const rolId = await Roles.find({ name: { $in: "Admin" } });
 
+      let rol_id = "";
+
+      rolId.map(function (i) {
+        rol_id = i._id;
+      });
+
       const values = await Promise.all(
         new User({
           username: "DamianGuilisasti",
           email: "damianguilisasti@gmail.com",
           password: await User.encryptPassword("959688671dD"),
-          rol: rolId._id,
+          rol: rol_id,
         }).save()
       );
     } catch (error) {
