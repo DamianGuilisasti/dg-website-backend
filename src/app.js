@@ -20,13 +20,11 @@ const app = express();
 
 // Settings
 
-app.set("port", process.env.PORT || 3000);
+app.set("port", process.env.PORT || 4000);
 
 async function start() {
-
-  await initialSetup.createRoles()
-  await initialSetup.createFirstUser()
-
+  await initialSetup.createRoles();
+  await initialSetup.createFirstUser();
 }
 
 // Middlewares
@@ -48,7 +46,7 @@ app.use(express.static(__dirname + "/public"));
 
 app.listen(app.get("port"), () => {
   console.log("Server on port: ", app.get("port"));
-  console.log("Environment: ", process.env.NODE_ENV);
+  console.log("Environment: ", process.env.NODE_ENV || "Producción");
 });
 
-start()
+start();

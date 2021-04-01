@@ -11,8 +11,8 @@ var instagramURL = "";
 var twitterURL = "";
 
 var url = {
-  host: "localhost",
-  port: 3000,
+  host: "localhost", //localhost
+  port: 4000,
   path: "/api/settings/list",
   method: "GET",
 };
@@ -50,11 +50,11 @@ function whatsapp() {
     "?text=Hola Damián, te quería consultar lo siguiente: "
   );
 }
-
+/* 
 export const transporter = nodemailer.createTransport({
-  host: process.env.NODEMAILER_HOST,
+  host: "gmail",
   port: process.env.NODEMAILER_PORT,
-  secure: false,
+  secure: true,
   auth: {
     user: process.env.GMAIL_EMAIL,
     pass: process.env.GMAIL_PASSWORD,
@@ -62,6 +62,21 @@ export const transporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false,
   },
+});
+ */
+export let transporter = nodemailer.createTransport({
+  host: 'smtp.gmail.com',
+  port: 465,
+  secure: true,
+  auth: {
+      type: 'OAuth2',
+      user: process.env.GMAIL_EMAIL,
+      pass: process.env.GMAIL_PASSWORD,
+      clientId: process.env.NODEMAILER_CLIENTID,
+      clientSecret: process.env.NODEMAILER_CLIENTSECRET,
+      refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
+      accessToken: process.env.NODEMAILER_ACCESSTOKEN,
+  }
 });
 
 transporter.verify().then(() => {
