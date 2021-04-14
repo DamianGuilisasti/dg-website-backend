@@ -1,71 +1,65 @@
-import mongoose, { Schema } from 'mongoose';
+import mongoose, { Schema } from "mongoose";
 
-const SettingSchema = new Schema({
+const SettingSchema = new Schema(
+  {
     logoURL: {
-        public_id: {
-            type: String
-        },
-        imageURL: {
-            type: String
-        }
+      public_id: {
+        type: String,
+      },
+      imageURL: {
+        type: String,
+      },
     },
     socialMedia: {
-        facebook: {
-            type: String
-        },
-        instagram: {
-            type: String
-        },
-        twitter: {
-            type: String
-        },
-        google: {
-            type: String
-        },
-        youtube: {
-            type: String
-        },
-        linkedin: {
-            type: String
-        }
+      facebook: {
+        type: String,
+      },
+      instagram: {
+        type: String,
+      },
+      twitter: {
+        type: String,
+      },
+      google: {
+        type: String,
+      },
+      youtube: {
+        type: String,
+      },
+      linkedin: {
+        type: String,
+      },
     },
     aboutInfo: {
-        type: String
-    },
-    contactInfo: {
-        phone: {
-            type: String
-        },
-        email: {
-            type: String
-        }
+      type: String,
     },
     companyName: {
-        type: String,
-  
+      type: String,
     },
     companyPhone: {
-        type: Number,
-
+      type: String,
     },
     companyEmail: {
-        type: String,
-
+      type: String,
+    },
+    companyAddress: {
+      type: String,
     },
     whatsapp: {
-        phone: {
-            type: Number
-        },
-        text: {
-            type: String
-        }
-    }
-},
-    {
-        timestamps: true,
-        collection: 'Settings'
-    });
+      phone: {
+        type: Number,
+      },
+      text: {
+        type: String,
+      },
+    },
+  },
+  {
+    timestamps: true,
+    collection: "Settings",
+  }
+);
 
-const Settings = mongoose.model('Settings', SettingSchema)
+const Settings = mongoose.model("Settings", SettingSchema);
 
 export default Settings;

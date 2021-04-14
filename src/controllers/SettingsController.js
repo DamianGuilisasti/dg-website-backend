@@ -18,21 +18,21 @@ export default {
         aboutInfo,
         companyName,
         socialMedia,
-        contactInfo,
         logoURL,
         companyPhone,
         whatsapp,
         companyEmail,
+        companyAddress,
       } = req.body;
       const newConfiguration = new Settings({
         aboutInfo,
         companyName,
         socialMedia,
-        contactInfo,
         logoURL,
         companyPhone,
         whatsapp,
         companyEmail,
+        companyAddress,
       });
 
       const newConfigurationSaved = await newConfiguration.save();
@@ -66,6 +66,7 @@ export default {
           companyName: req.body.companyName,
           companyPhone: req.body.companyPhone,
           companyEmail: req.body.companyEmail,
+          companyAddress: req.body.companyAddress,
         }
       );
       res.status(200).json(reg);

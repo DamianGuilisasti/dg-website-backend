@@ -36,6 +36,7 @@ http
 function showData(bodyData) {
   if (bodyData) {
     logoURL = bodyData.logoURL.imageURL;
+    console.log(logoURL);
     whatsappURL = bodyData.whatsapp.phone;
     linkedinURL = bodyData.socialMedia.linkedin;
     instagramURL = bodyData.socialMedia.instagram;
@@ -50,34 +51,34 @@ function whatsapp() {
     "?text=Hola Damián, te quería consultar lo siguiente: "
   );
 }
-/* 
+
 export const transporter = nodemailer.createTransport({
-  host: "gmail",
-  port: process.env.NODEMAILER_PORT,
-  secure: true,
+  host: "mail.amatistamayorista.com",
+  port: 25,
+  secure: false,
   auth: {
-    user: process.env.GMAIL_EMAIL,
-    pass: process.env.GMAIL_PASSWORD,
+    user: "ventas@amatistamayorista.com",
+    pass: "AlienSoftware2018",
   },
   tls: {
     rejectUnauthorized: false,
   },
 });
- */
-export let transporter = nodemailer.createTransport({
-  host: 'smtp.gmail.com',
+
+/* export let transporter = nodemailer.createTransport({
+  host: "smtp.gmail.com",
   port: 465,
   secure: true,
   auth: {
-      type: 'OAuth2',
-      user: process.env.GMAIL_EMAIL,
-      pass: process.env.GMAIL_PASSWORD,
-      clientId: process.env.NODEMAILER_CLIENTID,
-      clientSecret: process.env.NODEMAILER_CLIENTSECRET,
-      refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
-      accessToken: process.env.NODEMAILER_ACCESSTOKEN,
-  }
-});
+    type: "OAuth2",
+    user: process.env.GMAIL_EMAIL,
+    pass: process.env.GMAIL_PASSWORD,
+    clientId: process.env.NODEMAILER_CLIENTID,
+    clientSecret: process.env.NODEMAILER_CLIENTSECRET,
+    refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
+    accessToken: process.env.NODEMAILER_ACCESSTOKEN,
+  },
+}); */
 
 transporter.verify().then(() => {
   console.log("Conexión del envío de emails correcta");
@@ -111,8 +112,9 @@ export default {
         instagramURL: instagramURL,
         twitterURL: twitterURL,
         websiteURL: "https://damianguilisasti.com.ar/",
-        photoURL: "https://damianguilisasti.com.ar/damian.png",
-        logoURL: logoURL,
+        photoURL:
+          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        logoURL,
       },
       attachments: [
         {
@@ -137,8 +139,9 @@ export default {
         instagramURL: instagramURL,
         twitterURL: twitterURL,
         websiteURL: "https://damianguilisasti.com.ar/",
-        photoURL: "https://damianguilisasti.com.ar/damian.png",
-        logoURL: logoURL,
+        photoURL:
+          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        logoURL,
       },
       attachments: [
         {
@@ -147,5 +150,48 @@ export default {
         },
       ],
     }),
-};
 
+  forgotPassword: (email, name, subject) =>
+    transporter.sendMail({
+      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
+      to: email,
+      subject: subject,
+      template: "resetPassword",
+      context: {
+        //resetLink: "", este link es para resetear la contraseña del usuario.
+        user: name,
+        year: moment(new Date()).format("YYYY"),
+        month: moment(new Date()).format("MM/YYYY"),
+        whatsappURL: whatsapp,
+        linkedinURL: linkedinURL,
+        instagramURL: instagramURL,
+        twitterURL: twitterURL,
+        websiteURL: "https://damianguilisasti.com.ar/",
+        photoURL:
+          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        logoURL,
+      },
+    }),
+
+  resetPassword: (email, name, subject, resetURL) =>
+    transporter.sendMail({
+      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
+      to: email,
+      subject: subject,
+      template: "resetPassword",
+      context: {
+        resetURL,
+        user: name,
+        year: moment(new Date()).format("YYYY"),
+        month: moment(new Date()).format("MM/YYYY"),
+        whatsappURL: whatsapp,
+        linkedinURL: linkedinURL,
+        instagramURL: instagramURL,
+        twitterURL: twitterURL,
+        websiteURL: "https://damianguilisasti.com.ar/",
+        photoURL:
+          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        logoURL,
+      },
+    }),
+};

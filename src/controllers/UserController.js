@@ -2,6 +2,8 @@ import User from "../models/User";
 import jwt from "jsonwebtoken";
 import config from "../config";
 import Roles from "../models/Roles";
+import nodemailer from "../config/mailer";
+import crypto from "crypto";
 
 export default {
   login: async (req, res, next) => {
@@ -127,8 +129,6 @@ export default {
 
       const userFound = await User.findOne({ email: email }).populate("rol");
 
-      console.log(userFound);
-
       /*       if (userFound.rol[0].name !== "Admin") {
         return res.status(401).json({ message: "No autorizado" });
       } */
@@ -237,6 +237,97 @@ export default {
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",
+      });
+      next(error);
+    }
+  },
+  forgotPassword: async (req, res, next) => {
+    try {
+      const userFound = await User.findOne({ email: req.body.email });
+
+      if (userFound) {
+        try {
+          let email = userFound.email;
+          let name = userFound.name;
+          let subject = "Restablecer la contraseña | Damián Guilisasti";
+
+          let resetToken = await User.createPasswordResetToken();
+          let passwordResetToken = await User.encryptPasswordResetToken(
+            resetToken
+          ); //save the encrypted token on the database for mayor security.
+          let passwordResetExpires = await User.getPasswordResetExpires(); //get the date to allow the customer to reset the password for up to 10 mins
+
+          await User.findOneAndUpdate(
+            { email: email },
+            { passwordResetExpires, passwordResetToken }
+          );
+
+          let resetURL = `${req.protocol}://${req.get(
+            "host"
+          )}/resetpassword/${resetToken}`;
+
+          await nodemailer.resetPassword(email, name, subject, resetURL);
+
+          res.status(200).send({
+            message: "Email enviado al cliente",
+          });
+        } catch (error) {
+          res.status(500).send({
+            message:
+              "There is an error when try to update db and send the email to restore de password.",
+          });
+          next(error);
+        }
+      } else {
+        res.status(404).send({
+          message: "No se encontró un usuario con ese email.",
+        });
+        next(error);
+      }
+    } catch (error) {
+      res.status(500).send({
+        message:
+          "There is an error when try to update db and send the email to restore de password.",
+      });
+      next(error);
+    }
+  },
+
+  resetPassword: async (req, res, next) => {
+    try {
+      const hashedToken = crypto
+        .createHash("sha256")
+        .update(req.params.token)
+        .digest("hex");
+
+      const user = await User.findOne({
+        passwordResetToken: hashedToken,
+        passwordResetExpires: { $gt: Date.now() },
+      });
+
+      if (!user) {
+        return res.status(404).send({
+          message: "There is not user with this email.",
+        });
+      }
+
+      if (req.body.password === req.body.confirmpassword) {
+        let newPassword = await User.encryptPassword(req.body.password);
+
+        await User.findOneAndUpdate(
+          { email: user.email },
+          {
+            password: newPassword,
+            passwordResetExpires: undefined,
+            passwordResetToken: undefined,
+          }
+        );
+      }
+
+      res.status(200).send({ message: "Password updated successfully" });
+    } catch (error) {
+      res.status(500).send({
+        message: "There is an error when try to restore the password",
       });
       next(error);
     }

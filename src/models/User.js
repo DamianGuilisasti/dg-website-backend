@@ -1,5 +1,6 @@
 import { Schema, model } from "mongoose";
 import bcrypt from "bcryptjs";
+import crypto from "crypto";
 
 const UserSchema = new Schema(
   {
@@ -23,6 +24,12 @@ const UserSchema = new Schema(
       type: String,
       required: true,
     },
+    passwordResetToken: {
+      type: String,
+    },
+    passwordResetExpires: {
+      type: Date,
+    },
     rol: [
       {
         ref: "Rol",
@@ -40,13 +47,31 @@ const UserSchema = new Schema(
   }
 );
 
-UserSchema.statics.encryptPassword = async (password) => { //statics son funciones.
+UserSchema.statics.encryptPassword = async (password) => {
+  //statics son funciones.
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 };
 
 UserSchema.statics.comparePassword = async (password, receivedPassword) => {
   return await bcrypt.compare(password, receivedPassword);
+};
+
+UserSchema.statics.createPasswordResetToken = async () => {
+  const resetToken = await crypto.randomBytes(32).toString("hex");
+  return resetToken;
+};
+
+UserSchema.statics.encryptPasswordResetToken = (resetToken) => {
+  const passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+
+  return passwordResetToken;
+};
+UserSchema.statics.getPasswordResetExpires = () => {
+  return Date.now() + 10 * 60 * 1000;
 };
 
 export default model("User", UserSchema);

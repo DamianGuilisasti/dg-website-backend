@@ -46,5 +46,7 @@ router.delete(
   UserController.delete
 );
 router.get("/query", [verify.verifyToken.verify], UserController.query);
+router.post("/forgotpassword", UserController.forgotPassword);
+router.post("/resetpassword/:token", UserController.resetPassword);
 
 export default router;
