@@ -50,12 +50,25 @@ export default {
   },
   updateSliderById: async (req, res, next) => {
     try {
-      const sliderUpdated = await Slider.findByIdAndUpdate(
-        { _id: req.body._id },
-        req.body,
-        { new: true }
-      );
-      res.status(200).json(sliderUpdated);
+      console.log(req.body)
+      if (req.body.newSliderImg == 'true') {
+        const result = await cloudinary.uploader.upload(req.file.path);
+        const sliderUpdated = await Slider.findByIdAndUpdate(
+          { _id: req.body._id },
+          { title: req.body.title, subtitle: req.body.subtitle, sliderImg: { public_id: result.public_id, url: result.url } },
+          { new: true }
+        );
+        res.status(200).json(sliderUpdated);
+      }
+      else {
+        const sliderUpdated = await Slider.findByIdAndUpdate(
+          { _id: req.body._id },
+          { title: req.body.title, subtitle: req.body.subtitle },
+          { new: true }
+        );
+        res.status(200).json(sliderUpdated);
+      }
+
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",

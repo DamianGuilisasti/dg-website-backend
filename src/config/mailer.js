@@ -4,6 +4,10 @@ import path from "path";
 import moment from "moment";
 import http from "http";
 
+import dotenv from "dotenv";
+
+dotenv.config();
+
 var logoURL = "";
 var whatsappURL = "";
 var linkedinURL = "";
