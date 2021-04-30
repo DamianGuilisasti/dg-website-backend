@@ -53,6 +53,14 @@ const SettingSchema = new Schema(
         type: String,
       },
     },
+    companyImg: {
+      public_id: {
+        type: String,
+      },
+      imageURL: {
+        type: String,
+      },
+    },
   },
   {
     timestamps: true,

@@ -148,6 +148,31 @@ export default {
       next();
     }
   },
+  updateCompanyImg: async (req, res, next) => {
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path);
+
+      const reg = await Settings.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          companyImg: {
+            public_id: result.public_id,
+            imageURL: result.url,
+          },
+        }
+      );
+
+      await fs.unlink(req.file.path);
+
+      res.status(200).json(reg);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Ocurrió un error",
+      });
+      next();
+    }
+  },
   deleteLogo: async (req, res, next) => {
     try {
       const reg = await Settings.findByIdAndUpdate(
@@ -169,4 +194,26 @@ export default {
       next();
     }
   },
+  deleteCompanyImg: async (req, res, next) => {
+    try {
+      const reg = await Settings.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          companyImg: {
+            public_id: "",
+            imageURL: "",
+          },
+        }
+      );
+
+      res.status(200).json(reg);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Ocurrió un error",
+      });
+      next();
+    }
+  },
+  
 };

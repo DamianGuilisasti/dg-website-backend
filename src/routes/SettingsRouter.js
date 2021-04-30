@@ -11,5 +11,7 @@ router.put('/updateSocialMedia', SettingsController.updateSocialMedia);
 router.put('/updateWhatsapp', SettingsController.updateWhatsapp);
 router.put('/updateLogo', upload, SettingsController.updateLogo);
 router.put('/deleteLogo', SettingsController.deleteLogo);
+router.put('/updateCompanyImg', upload, SettingsController.updateCompanyImg)
+router.put('/deleteCompanyImg', SettingsController.deleteCompanyImg);
 
 export default router;
