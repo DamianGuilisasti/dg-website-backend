@@ -40,7 +40,6 @@ http
 function showData(bodyData) {
   if (bodyData) {
     logoURL = bodyData.logoURL.imageURL;
-    console.log(logoURL);
     whatsappURL = bodyData.whatsapp.phone;
     linkedinURL = bodyData.socialMedia.linkedin;
     instagramURL = bodyData.socialMedia.instagram;

@@ -13,6 +13,20 @@ cloudinary.config({
 });
 
 export default {
+  updateIndex: async (req, res, next) => {
+    try {
+      const sliders = req.body.sliders;
+
+      await Slider.deleteMany({});
+      await Slider.insertMany(sliders);
+      res.status(200).json(sliders);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error",
+      });
+      next(error);
+    }
+  },
   list: async (req, res, next) => {
     try {
       const result = await Slider.find();
@@ -28,8 +42,6 @@ export default {
     try {
       const { title, subtitle } = req.body;
       const result = await cloudinary.uploader.upload(req.file.path);
-
-      console.log(req.file.path);
 
       const newSlider = new Slider({
         title,
@@ -50,17 +62,19 @@ export default {
   },
   updateSliderById: async (req, res, next) => {
     try {
-      console.log(req.body)
-      if (req.body.newSliderImg == 'true') {
+      if (req.body.newSliderImg == "true") {
         const result = await cloudinary.uploader.upload(req.file.path);
         const sliderUpdated = await Slider.findByIdAndUpdate(
           { _id: req.body._id },
-          { title: req.body.title, subtitle: req.body.subtitle, sliderImg: { public_id: result.public_id, url: result.url } },
+          {
+            title: req.body.title,
+            subtitle: req.body.subtitle,
+            sliderImg: { public_id: result.public_id, url: result.url },
+          },
           { new: true }
         );
         res.status(200).json(sliderUpdated);
-      }
-      else {
+      } else {
         const sliderUpdated = await Slider.findByIdAndUpdate(
           { _id: req.body._id },
           { title: req.body.title, subtitle: req.body.subtitle },
@@ -68,7 +82,6 @@ export default {
         );
         res.status(200).json(sliderUpdated);
       }
-
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",

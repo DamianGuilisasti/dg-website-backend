@@ -13,6 +13,20 @@ cloudinary.config({
 });
 
 export default {
+  updateIndex: async (req, res, next) => {
+    try {
+      const logos = req.body.logos;
+
+      await Logos.deleteMany({});
+      await Logos.insertMany(logos);
+      res.status(200).json(logos);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error",
+      });
+      next(error);
+    }
+  },
   list: async (req, res, next) => {
     try {
       const result = await Logos.find();
@@ -27,8 +41,6 @@ export default {
   add: async (req, res, next) => {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
-
-      console.log(req.file.path);
 
       const newLogo = new Logos({
         logoImg: { public_id: result.public_id, url: result.url },

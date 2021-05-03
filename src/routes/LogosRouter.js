@@ -9,5 +9,6 @@ router.post("/add", upload, LogosController.add);
 router.put("/activate", LogosController.activateLogoById);
 router.put("/desactivate", LogosController.desactivateLogoById);
 router.delete("/delete", LogosController.deleteLogoById);
+router.post("/updateIndex", LogosController.updateIndex);
 
 export default router;

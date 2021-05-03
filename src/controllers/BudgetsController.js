@@ -128,7 +128,6 @@ export default {
   },
   sendEmailManually: async (req, res, next) => {
     try {
-      console.log(req.body);
       await mailer.sendBillManually(req.body.email, req.body.name, req.body.subject);
       await fs.unlink(req.file.path);
       res.status(200).send({

@@ -15,7 +15,6 @@ export default {
     },
     add: async (req, res, next) => {
         try {
-            console.log(req.body);
             const { title, category, author, tags } = req.body;
             const newPost = new Post({ title, category, author, tags });
             const postSaved = await newPost.save();

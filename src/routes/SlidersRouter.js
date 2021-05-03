@@ -10,5 +10,6 @@ router.put("/update", upload, SlidersController.updateSliderById);
 router.put("/activate", SlidersController.activateSliderById);
 router.put("/desactivate", SlidersController.desactivateSliderById);
 router.delete("/delete", SlidersController.deleteSliderById);
+router.post("/updateIndex", SlidersController.updateIndex);
 
 export default router;
