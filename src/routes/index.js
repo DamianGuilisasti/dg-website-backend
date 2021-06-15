@@ -10,6 +10,7 @@ import ExpensesRouter from "./ExpensesRouter";
 import RolRouter from "./RolRouter";
 import SlidersRouter from "./SlidersRouter";
 import LogosRouter from "./LogosRouter";
+import PortfolioRouter from "./PortfolioRouter";
 
 const router = express.Router();
 
@@ -24,6 +25,7 @@ router.use("/expenses", ExpensesRouter);
 router.use("/roles", RolRouter);
 router.use("/sliders", SlidersRouter);
 router.use("/logos", LogosRouter);
+router.use("/portfolio", PortfolioRouter);
 
 
 export default router;
