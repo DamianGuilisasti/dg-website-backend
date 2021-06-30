@@ -33,6 +33,9 @@ const PortfolioSchema = new Schema(
         url: {
           type: String,
         },
+        index: {
+          type: Number,
+        },
       },
     ],
     state: {

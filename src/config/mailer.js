@@ -94,7 +94,7 @@ const handlebarOptions = {
     layoutsDir: "../layouts",
     defaultLayout: "",
   },
-  viewPath: path.join(__dirname, "../templates"),
+  viewPath: path.join(__dirname, "../templates"), //ver esto en producción
   extName: ".handlebars",
 };
 
