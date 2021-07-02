@@ -33,8 +33,8 @@ export default {
       const values = await Promise.all(
         new User({
           username: "DamianGuilisasti",
-          email: "damianguilisasti@gmail.com",
-          password: await User.encryptPassword("959688671dD"),
+          email: process.env.userEmail,
+          password: await User.encryptPassword(process.env.userPassword),
           rol: rol_id,
         }).save()
       );

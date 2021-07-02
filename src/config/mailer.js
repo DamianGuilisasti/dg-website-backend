@@ -15,7 +15,7 @@ var instagramURL = "";
 var twitterURL = "";
 
 var url = {
-  host: "localhost", //localhost
+  host: "localhost",
   port: 4000,
   path: "/api/settings/list",
   method: "GET",
@@ -55,7 +55,7 @@ function whatsapp() {
   );
 }
 
-export const transporter = nodemailer.createTransport({
+/* export const transporter = nodemailer.createTransport({
   host: "mail.amatistamayorista.com",
   port: 25,
   secure: false,
@@ -66,9 +66,9 @@ export const transporter = nodemailer.createTransport({
   tls: {
     rejectUnauthorized: false,
   },
-});
+}); */
 
-/* export let transporter = nodemailer.createTransport({
+export let transporter = nodemailer.createTransport({
   host: "smtp.gmail.com",
   port: 465,
   secure: true,
@@ -81,11 +81,16 @@ export const transporter = nodemailer.createTransport({
     refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
     accessToken: process.env.NODEMAILER_ACCESSTOKEN,
   },
-}); */
+}); 
 
-transporter.verify().then(() => {
-  console.log("Conexión del envío de emails correcta");
-});
+transporter
+  .verify()
+  .then(() => {
+    console.log("Conexión del envío de emails correcta");
+  })
+  .catch((error) => {
+    console.log(error);
+  });
 
 const handlebarOptions = {
   viewEngine: {
@@ -94,7 +99,7 @@ const handlebarOptions = {
     layoutsDir: "../layouts",
     defaultLayout: "",
   },
-  viewPath: path.join(__dirname, "../templates"), //ver esto en producción
+  viewPath: path.join(__dirname, "../templates"),
   extName: ".handlebars",
 };
 

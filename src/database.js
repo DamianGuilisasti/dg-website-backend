@@ -1,14 +1,17 @@
 import mongoose from "mongoose";
 
-const MONGODB_HOST = "localhost:27017";
-const MONGODB_DATABASE = "dgwebsite";
+import dotenv from "dotenv";
 
-//const { MONGODB_HOST, MONGODB_DATABASE } = process.env;
+dotenv.config();
 
-const MONGODB_URI = `mongodb://${MONGODB_HOST}/${MONGODB_DATABASE}`;
+function databaseUri() {
+  if (process.env.NODE_ENV == "production") return process.env.MONGODB_URI;
+  else
+    return `mongodb://${process.env.MONGODB_HOST}${process.env.MONGODB_DATABASE}`;
+}
 
 mongoose
-  .connect(MONGODB_URI, {
+  .connect(databaseUri(), {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
