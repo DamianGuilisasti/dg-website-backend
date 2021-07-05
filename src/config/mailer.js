@@ -13,6 +13,13 @@ var whatsappURL = "";
 var linkedinURL = "";
 var instagramURL = "";
 var twitterURL = "";
+var facebookURL = "";
+var googleURL = "";
+var youtubeURL = "";
+var companyImg = "";
+var companyName = "";
+var websiteURL= "https://damianguilisasti.com.ar/";
+var from = '"Damián Guilisasti" <hola@damianguilisasti.com.ar>';
 
 var url = {
   host: "localhost",
@@ -44,6 +51,11 @@ function showData(bodyData) {
     linkedinURL = bodyData.socialMedia.linkedin;
     instagramURL = bodyData.socialMedia.instagram;
     twitterURL = bodyData.socialMedia.twitter;
+    facebookURL = bodyData.socialMedia.facebook;
+    googleURL = bodyData.socialMedia.google;
+    youtubeURL = bodyData.socialMedia.youtube;
+    companyName = bodyData.companyName;
+    companyImg = bodyData.companyImg.imageURL;
   }
 }
 
@@ -81,7 +93,7 @@ export let transporter = nodemailer.createTransport({
     refreshToken: process.env.NODEMAILER_REFRESHTOKEN,
     accessToken: process.env.NODEMAILER_ACCESSTOKEN,
   },
-}); 
+});
 
 transporter
   .verify()
@@ -106,23 +118,23 @@ const handlebarOptions = {
 transporter.use("compile", hbs(handlebarOptions));
 
 export default {
-  welcomeMail: (email, name) =>
+  sendBudget: (email, name) =>
     transporter.sendMail({
-      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
+      from,
       to: email,
-      subject: "Presupuesto",
+      subject: "Presupuesto Proyecto",
       template: "budget",
       context: {
         user: name,
         year: moment(new Date()).format("YYYY"),
         whatsappURL: whatsapp,
-        linkedinURL: linkedinURL,
-        instagramURL: instagramURL,
-        twitterURL: twitterURL,
-        websiteURL: "https://damianguilisasti.com.ar/",
-        photoURL:
-          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        linkedinURL,
+        instagramURL,
+        twitterURL,
+        websiteURL,
+        companyImg,
         logoURL,
+        companyName
       },
       attachments: [
         {
@@ -134,7 +146,7 @@ export default {
 
   sendBillManually: (email, name, subject) =>
     transporter.sendMail({
-      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
+      from,
       to: email,
       subject: subject,
       template: "bill",
@@ -143,13 +155,13 @@ export default {
         year: moment(new Date()).format("YYYY"),
         month: moment(new Date()).format("MM/YYYY"),
         whatsappURL: whatsapp,
-        linkedinURL: linkedinURL,
-        instagramURL: instagramURL,
-        twitterURL: twitterURL,
-        websiteURL: "https://damianguilisasti.com.ar/",
-        photoURL:
-          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        linkedinURL,
+        instagramURL,
+        twitterURL,
+        websiteURL,
+        companyImg,
         logoURL,
+        companyName
       },
       attachments: [
         {
@@ -159,47 +171,25 @@ export default {
       ],
     }),
 
-  forgotPassword: (email, name, subject) =>
-    transporter.sendMail({
-      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
-      to: email,
-      subject: subject,
-      template: "resetPassword",
-      context: {
-        //resetLink: "", este link es para resetear la contraseña del usuario.
-        user: name,
-        year: moment(new Date()).format("YYYY"),
-        month: moment(new Date()).format("MM/YYYY"),
-        whatsappURL: whatsapp,
-        linkedinURL: linkedinURL,
-        instagramURL: instagramURL,
-        twitterURL: twitterURL,
-        websiteURL: "https://damianguilisasti.com.ar/",
-        photoURL:
-          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
-        logoURL,
-      },
-    }),
-
   resetPassword: (email, name, subject, resetURL) =>
     transporter.sendMail({
-      from: '"Damián Guilisasti" <hola@damianguilisasti.com.ar>',
+      from,
       to: email,
       subject: subject,
-      template: "resetPassword",
+      template: "forgotPassword",
       context: {
         resetURL,
         user: name,
         year: moment(new Date()).format("YYYY"),
         month: moment(new Date()).format("MM/YYYY"),
         whatsappURL: whatsapp,
-        linkedinURL: linkedinURL,
-        instagramURL: instagramURL,
-        twitterURL: twitterURL,
-        websiteURL: "https://damianguilisasti.com.ar/",
-        photoURL:
-          "https://res.cloudinary.com/degq0ap4m/image/upload/v1617795461/damian-bg.7c19179d_nj73v8.jpg",
+        linkedinURL,
+        instagramURL,
+        twitterURL,
+        websiteURL,
+        companyImg,
         logoURL,
+        companyName
       },
     }),
 };

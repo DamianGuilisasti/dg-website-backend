@@ -112,20 +112,6 @@ export default {
       next(error);
     }
   },
-  sendEmail: async (req, res, next) => {
-    try {
-      await mailer.welcomeMail(req.body.email, req.body.name);
-      res.status(200).send({
-        message: "Email enviado",
-      });
-    } catch (error) {
-      res.status(500).send({
-        message: "Ocurrió un error.",
-      });
-
-      next(error);
-    }
-  },
   sendEmailManually: async (req, res, next) => {
     try {
       await mailer.sendBillManually(req.body.email, req.body.name, req.body.subject);
@@ -143,7 +129,7 @@ export default {
   },
   uploadPDF: async (req, res, next) => {
     try {
-      await mailer.welcomeMail(req.body.email, req.body.name);
+      await mailer.sendBudget(req.body.email, req.body.name);
       await fs.unlink(req.file.path);
       res.status(200).send({
         message: "Email enviado",

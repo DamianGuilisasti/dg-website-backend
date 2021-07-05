@@ -4,7 +4,7 @@
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Damián Guilisasti</title>
+    <title>{{companyName}}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <style type="text/css">
@@ -58,14 +58,14 @@
                                                         style="border-collapse: collapse;">
                                                         <tr>
                                                             <td>
-                                                                <img src="{{photoURL}}" alt="" width="auto" height="150"
+                                                                <img src="{{companyImg}}" alt="" width="auto" height="150"
                                                                     style="display: block;" />
                                                             </td>
                                                         </tr>
                                                         <tr>
                                                             <td
                                                                 style="color: #153643; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; padding: 25px 0 0 0;">
-                                                                <p style="margin: 0;">Damián Guilisasti<br>
+                                                                <p style="margin: 0;">{{companyName}}<br>
                                                                     <b>Full Stack Web Developer</b><br>
                                                                     Rosario, Argentina.
                                                                 </p>
@@ -73,30 +73,6 @@
                                                         </tr>
                                                     </table>
                                                 </td>
-                                                <!-- <td style="font-size: 0; line-height: 0;" width="20">&nbsp;</td>
-                                                <td width="260" valign="top">
-                                                    <table border="0" cellpadding="0" cellspacing="0" width="100%"
-                                                        style="border-collapse: collapse;">
-                                                        <tr>
-                                                            <td>
-                                                                <img src="{{logoURL}}" alt="" width="100%" height="140"
-                                                                    style="display: block;" />
-
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td
-                                                                style="color: #153643; font-family: Poppins, sans-serif; font-size: 16px; line-height: 24px; padding: 25px 0 0 0;">
-                                                                <p style="margin: 0;">Lorem ipsum dolor sit amet,
-                                                                    consectetur adipiscing elit. In tempus adipiscing
-                                                                    felis, sit amet blandit ipsum volutpat sed. Morbi
-                                                                    porttitor, eget accumsan dictum, nisi libero
-                                                                    ultricies ipsum, in posuere mauris neque at erat.
-                                                                </p>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
-                                                </td> -->
                                             </tr>
                                         </table>
                                     </td>
@@ -110,13 +86,14 @@
                                 style="border-collapse: collapse;">
                                 <tr>
                                     <td style="color: #ffffff; font-family: Poppins, sans-serif; font-size: 14px;">
-                                        <p style="margin: 0;">&reg; Damián Guilisasti {{year}}<br />
+                                        <p style="margin: 0;">&reg; {{companyName}} {{year}}<br />
                                             Performant and Reliable Apps.</p>
                                     </td>
                                     <td align="right">
                                         <table border="0" cellpadding="0" cellspacing="0"
                                             style="border-collapse: collapse;">
                                             <tr>
+                                                {{#if whatsappURL}}
                                                 <td>
                                                     <a href="{{whatsappURL}}">
                                                         <img src="https://res.cloudinary.com/degq0ap4m/image/upload/v1617794978/whatsapp_iracno.png"
@@ -124,6 +101,8 @@
                                                             style="display: block;" border="0" />
                                                     </a>
                                                 </td>
+                                                {{/if}}
+                                                {{#if linkedinURL}}
                                                 <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
                                                 <td>
                                                     <a href="{{linkedinURL}}">
@@ -132,13 +111,8 @@
                                                             style="display: block;" border="0" />
                                                     </a>
                                                 </td>
-                                                <!--                                                 <td>
-                                                    <a href="{{twitterURL}}">
-                                                        <img src="https://damianguilisasti.com.ar/twitter.png"
-                                                            alt="Twitter." width="20" height="20"
-                                                            style="display: block;" border="0" />
-                                                    </a>
-                                                </td> -->
+                                                {{/if}}
+                                                {{#if instagramURL}}
                                                 <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
                                                 <td>
                                                     <a href="{{instagramURL}}">
@@ -147,6 +121,48 @@
                                                             style="display: block;" border="0" />
                                                     </a>
                                                 </td>
+                                                {{/if}}
+                                                {{#if twitterURL}}
+                                                <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
+                                                <td>
+                                                    <a href="{{twitterURL}}">
+                                                        <img src="https://res.cloudinary.com/degq0ap4m/image/upload/v1617794978/twitter_rgxjgq.png"
+                                                            alt="Instagram." width="20" height="20"
+                                                            style="display: block;" border="0" />
+                                                    </a>
+                                                </td>
+                                                {{/if}}
+                                                {{#if googleURL}}
+                                                <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
+                                                <td>
+                                                    <a href="{{googleURL}}">
+                                                        <img src="https://res.cloudinary.com/degq0ap4m/image/upload/v1625417048/google_bamoda.png"
+                                                            alt="Instagram." width="20" height="20"
+                                                            style="display: block;" border="0" />
+                                                    </a>
+                                                </td>
+                                                {{/if}}
+                                                {{#if youtubeURL}}
+                                                <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
+                                                <td>
+                                                    <a href="{{youtubeURL}}">
+                                                        <img src="https://res.cloudinary.com/degq0ap4m/image/upload/v1625417049/youtube_leptxv.png"
+                                                            alt="Instagram." width="20" height="20"
+                                                            style="display: block;" border="0" />
+                                                    </a>
+                                                </td>
+                                                {{/if}}
+                                                {{#if facebookURL}}
+                                                <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
+                                                <td>
+                                                    <a href="{{facebookURL}}">
+                                                        <img src="https://res.cloudinary.com/degq0ap4m/image/upload/v1617794978/facebook_tphdis.png"
+                                                            alt="Instagram." width="20" height="20"
+                                                            style="display: block;" border="0" />
+                                                    </a>
+                                                </td>
+                                                {{/if}}
+                                                {{#if websiteURL}}
                                                 <td style="font-size: 0; line-height: 0;" width="15">&nbsp;</td>
                                                 <td>
                                                     <a href="{{websiteURL}}">
@@ -155,6 +171,7 @@
                                                             style="display: block;" border="0" />
                                                     </a>
                                                 </td>
+                                                {{/if}}
                                             </tr>
                                         </table>
                                     </td>

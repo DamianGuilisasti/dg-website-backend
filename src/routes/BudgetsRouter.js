@@ -42,11 +42,6 @@ router.delete(
   BudgetsController.deleteBudgetById
 );
 router.post(
-  "/sendEmail",
-  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.sendEmail
-);
-router.post(
   "/uploadPDF",
   uploadPDF,
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],

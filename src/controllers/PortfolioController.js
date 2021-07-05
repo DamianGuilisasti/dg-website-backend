@@ -77,7 +77,6 @@ export default {
   },
   updatePortfolioById: async (req, res, next) => {
     try {
-      console.log(req.body);
 
       const {
         client,
