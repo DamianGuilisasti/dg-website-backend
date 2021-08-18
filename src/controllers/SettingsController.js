@@ -173,6 +173,23 @@ export default {
       next();
     }
   },
+  updateCompanyURL: async (req, res, next) => {
+    try {
+      const reg = await Settings.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          companyURL: req.body.companyURL,
+        }
+      );
+      res.status(200).json(reg);
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({
+        message: "Ocurrió un error",
+      });
+      next();
+    }
+  },
   deleteLogo: async (req, res, next) => {
     try {
       const reg = await Settings.findByIdAndUpdate(
@@ -215,5 +232,4 @@ export default {
       next();
     }
   },
-  
 };

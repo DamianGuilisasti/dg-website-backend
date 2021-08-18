@@ -4,11 +4,11 @@ import User from "../models/User";
 export default {
   createRoles: async () => {
     try {
-      const counter = await Roles.estimatedDocumentCount();
+      const counter = await Roles.countDocuments({}).exec();
 
       if (counter > 0) return;
 
-      const values = await Promise.all([
+      await Promise.all([
         new Roles({ name: "Cliente" }).save(),
         new Roles({ name: "Admin" }).save(),
       ]);
@@ -18,7 +18,7 @@ export default {
   },
   createFirstUser: async () => {
     try {
-      const counter = await User.estimatedDocumentCount();
+      const counter = await User.countDocuments({}).exec();
 
       if (counter > 0) return;
 
@@ -30,14 +30,15 @@ export default {
         rol_id = i._id;
       });
 
-      const values = await Promise.all(
-        new User({
-          username: "DamianGuilisasti",
-          email: process.env.userEmail,
-          password: await User.encryptPassword(process.env.userPassword),
-          rol: rol_id,
-        }).save()
-      );
+      const firstUser = new User({
+        username: "DamianGuilisasti",
+        email: process.env.userEmail,
+        password: await User.encryptPassword(process.env.userPassword),
+        rol: rol_id,
+      });
+
+     await firstUser.save();
+
     } catch (error) {
       console.log(error);
     }

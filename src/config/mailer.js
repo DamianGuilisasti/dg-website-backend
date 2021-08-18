@@ -18,7 +18,8 @@ var googleURL = "";
 var youtubeURL = "";
 var companyImg = "";
 var companyName = "";
-var websiteURL= "https://damianguilisasti.com.ar/";
+var companyURL = "";
+var websiteURL = "https://damianguilisasti.com.ar/";
 var from = '"Damián Guilisasti" <hola@damianguilisasti.com.ar>';
 
 var url = {
@@ -55,7 +56,8 @@ function showData(bodyData) {
     googleURL = bodyData.socialMedia.google;
     youtubeURL = bodyData.socialMedia.youtube;
     companyName = bodyData.companyName;
-    companyImg = bodyData.companyImg.imageURL;
+    //companyImg = bodyData.companyImg.imageURL;
+    //companyURL = bodyData.companyURL.imageURL;
   }
 }
 
@@ -134,7 +136,7 @@ export default {
         websiteURL,
         companyImg,
         logoURL,
-        companyName
+        companyName,
       },
       attachments: [
         {
@@ -161,7 +163,7 @@ export default {
         websiteURL,
         companyImg,
         logoURL,
-        companyName
+        companyName,
       },
       attachments: [
         {
@@ -178,7 +180,7 @@ export default {
       subject: subject,
       template: "forgotPassword",
       context: {
-        resetURL,
+        resetURL: companyURL + resetURL,
         user: name,
         year: moment(new Date()).format("YYYY"),
         month: moment(new Date()).format("MM/YYYY"),
@@ -189,7 +191,7 @@ export default {
         websiteURL,
         companyImg,
         logoURL,
-        companyName
+        companyName,
       },
     }),
 };

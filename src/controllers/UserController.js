@@ -84,15 +84,8 @@ export default {
   },
   add: async (req, res, next) => {
     try {
-      const {
-        name,
-        lastname,
-        email,
-        username,
-        password,
-        rol,
-        state,
-      } = req.body;
+      const { name, lastname, email, username, password, rol, state } =
+        req.body;
 
       const newUser = new User({
         name,
@@ -117,15 +110,8 @@ export default {
   },
   updateInEditAccount: async (req, res, next) => {
     try {
-      const {
-        email,
-        password,
-        newpassword,
-        username,
-        name,
-        lastname,
-        rol,
-      } = req.body;
+      const { email, password, newpassword, username, name, lastname, rol } =
+        req.body;
 
       const userFound = await User.findOne({ email: email }).populate("rol");
 
@@ -235,6 +221,7 @@ export default {
       const userFound = await User.findOne({ _id: userId }).populate("rol");
       res.status(200).json(userFound);
     } catch (error) {
+      console.log(error);
       res.status(500).send({
         message: "Ocurrió un error.",
       });
@@ -262,9 +249,7 @@ export default {
             { passwordResetExpires, passwordResetToken }
           );
 
-          let resetURL = `${req.protocol}://${req.get(
-            "host"
-          )}/resetpassword/${resetToken}`;
+          let resetURL = `/resetpassword/${resetToken}`;
 
           await nodemailer.resetPassword(email, name, subject, resetURL);
 

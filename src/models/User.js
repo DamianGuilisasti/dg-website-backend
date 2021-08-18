@@ -48,7 +48,6 @@ const UserSchema = new Schema(
 );
 
 UserSchema.statics.encryptPassword = async (password) => {
-  //statics son funciones.
   const salt = await bcrypt.genSalt(10);
   return await bcrypt.hash(password, salt);
 };

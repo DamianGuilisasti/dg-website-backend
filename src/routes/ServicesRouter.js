@@ -6,7 +6,6 @@ const router = express.Router();
 
 router.get(
   "/list",
-  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   ServicesController.list
 );
 router.post(

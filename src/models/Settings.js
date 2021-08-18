@@ -61,6 +61,9 @@ const SettingSchema = new Schema(
         type: String,
       },
     },
+    companyURL: {
+      type: String,
+    },
   },
   {
     timestamps: true,

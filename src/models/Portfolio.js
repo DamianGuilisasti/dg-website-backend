@@ -25,7 +25,7 @@ const PortfolioSchema = new Schema(
     clientReview: {
       type: String,
     },
-    images: [
+    portfolioimages: [
       {
         public_id: {
           type: String,
@@ -34,10 +34,11 @@ const PortfolioSchema = new Schema(
           type: String,
         },
         index: {
-          type: Number,
+          type: String,
         },
       },
     ],
+
     state: {
       type: Number,
       default: 1,

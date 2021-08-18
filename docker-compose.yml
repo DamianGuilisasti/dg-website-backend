@@ -1,0 +1,20 @@
+version: "3"
+
+services: 
+    backend:
+        container_name: dg-website-backend
+        restart: always
+        build: .
+        ports: 
+            - 4000:3000
+        links:
+            - mongo
+        volumes: 
+            - .:/usr/src/app
+    mongo:
+        container_name: mongodbdatabase
+        image: mongo
+        ports: ["27018:27017"]
+        logging:
+            driver: none
+

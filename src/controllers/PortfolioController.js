@@ -14,13 +14,11 @@ cloudinary.config({
 export default {
   list: async (req, res, next) => {
     try {
-      //let value = req.query.value;
       const reg = await Portfolio.find().populate("client", {
         _id: 1,
         name: 1,
         lastname: 1,
-      }); //tiene que ir en minúsuclas, no preguntes porque.. jeje
-      //.populate('services').populate('service', { name: 1, _id: 0, price: 1 });
+      });
       res.status(200).json(reg);
     } catch (e) {
       res.status(500).send({
@@ -39,19 +37,19 @@ export default {
         proyectType,
         proyectLink,
         clientReview,
+        portfolioimages,
+        deletedImagesPublicID,
       } = req.body;
 
-      let image = "";
-      const images = [];
-
-      if (req.files) {
-        await Promise.all(
-          req.files.map(async (element) => {
-            image = await cloudinary.uploader.upload(element.path);
-            images.push({ public_id: image.public_id, url: image.url });
-            await fs.unlink(element.path);
-          })
-        );
+      if (deletedImagesPublicID) {
+        deletedImagesPublicID.map(async function (i) {
+          await cloudinary.uploader.destroy(i, function (result, error) {
+            console.log(result);
+            if (error) {
+              console.log(error);
+            }
+          });
+        });
       }
 
       const newPortfolio = new Portfolio({
@@ -62,22 +60,47 @@ export default {
         proyectType,
         proyectLink,
         clientReview,
-        images,
+        portfolioimages: JSON.parse(portfolioimages),
       });
 
       const portfolioSaved = await newPortfolio.save();
+
       res.status(200).json(portfolioSaved);
     } catch (error) {
-      console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "Ocurrió un error.",
       });
-      next();
+      next(error);
+    }
+  },
+  uploadimage: async (req, res, next) => {
+    try {
+      let image = "";
+      const images = [];
+
+      if (req.files) {
+        await Promise.all(
+          req.files.map(async (element) => {
+            image = await cloudinary.uploader.upload(element.path);
+            images.push({
+              public_id: image.public_id,
+              url: image.url,
+              index: req.body.index,
+            });
+            await fs.unlink(element.path);
+          })
+        );
+      }
+      res.status(200).json(images);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error.",
+      });
+      next(error);
     }
   },
   updatePortfolioById: async (req, res, next) => {
     try {
-
       const {
         client,
         description,
@@ -86,7 +109,20 @@ export default {
         proyectType,
         proyectLink,
         clientReview,
+        deletedImagesPublicID,
+        portfolioimages,
       } = req.body;
+
+      if (deletedImagesPublicID) {
+        deletedImagesPublicID.map(async function (i) {
+          await cloudinary.uploader.destroy(i, function (result, error) {
+            console.log(result);
+            if (error) {
+              console.log(error);
+            }
+          });
+        });
+      }
 
       const portfolioUpdated = await Portfolio.findByIdAndUpdate(
         { _id: req.body._id },
@@ -98,6 +134,7 @@ export default {
           proyectType,
           proyectLink,
           clientReview,
+          portfolioimages: JSON.parse(portfolioimages),
         }
       );
 
