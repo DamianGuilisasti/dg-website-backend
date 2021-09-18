@@ -7,6 +7,16 @@ const PortfolioSchema = new Schema(
       ref: "Clients",
       required: true,
     },
+    name: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    slug: {
+      type: String,
+      unique: true,
+      required: true,
+    },
     description: {
       type: String,
     },
@@ -16,10 +26,10 @@ const PortfolioSchema = new Schema(
     solution: {
       type: String,
     },
-    proyectType: {
+    projectType: {
       type: String,
     },
-    proyectLink: {
+    projectLink: {
       type: String,
     },
     clientReview: {
@@ -38,7 +48,6 @@ const PortfolioSchema = new Schema(
         },
       },
     ],
-
     state: {
       type: Number,
       default: 1,

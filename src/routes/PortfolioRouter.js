@@ -6,6 +6,8 @@ import verify from "../middlewares";
 const router = express.Router();
 
 router.get("/list", PortfolioController.list);
+router.get("/query", PortfolioController.getPortfolio);
+router.post("/relatedprojects", PortfolioController.getRelatedProjects);
 router.post(
   "/add",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],

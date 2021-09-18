@@ -4,17 +4,18 @@ services:
     backend:
         container_name: dg-website-backend
         restart: always
-        build: .
+        build: 
+            dockerfile: Dockerfile
         ports: 
             - 4000:3000
-        links:
-            - mongo
+     #   links:
+     #       - mongo
         volumes: 
             - .:/usr/src/app
-    mongo:
-        container_name: mongodbdatabase
-        image: mongo
-        ports: ["27018:27017"]
-        logging:
-            driver: none
+    #mongo:
+    #    container_name: mongodbdatabase
+    #    image: mongo
+    #    ports: ["27018:27017"]
+    #    logging:
+    #        driver: none
 

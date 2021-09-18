@@ -2,6 +2,7 @@ import Portfolio from "../models/Portfolio";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
+import slugify from "slugify";
 
 dotenv.config();
 
@@ -27,6 +28,31 @@ export default {
       next(e);
     }
   },
+  getPortfolio: async (req, res, next) => {
+    try {
+      const slug = req.query[0];
+      const result = await Portfolio.findOne({ slug: slug }).populate("client");
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "Ocurrió un error" });
+      next(error);
+    }
+  },
+  getRelatedProjects: async (req, res, next) => {
+    try {
+      const slug = req.body.slug;
+      const result = await Portfolio.find({ slug: { $ne: slug } }).populate(
+        "client"
+      );
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "Ocurrió un error" });
+      next(error);
+    }
+  },
+
   add: async (req, res, next) => {
     try {
       const {
@@ -34,12 +60,15 @@ export default {
         description,
         problem,
         solution,
-        proyectType,
-        proyectLink,
+        projectType,
+        projectLink,
         clientReview,
         portfolioimages,
         deletedImagesPublicID,
+        name,
       } = req.body;
+
+      const slug = slugify(name).toLowerCase();
 
       if (deletedImagesPublicID) {
         deletedImagesPublicID.map(async function (i) {
@@ -54,11 +83,13 @@ export default {
 
       const newPortfolio = new Portfolio({
         client,
+        name,
+        slug,
         description,
         problem,
         solution,
-        proyectType,
-        proyectLink,
+        projectType,
+        projectLink,
         clientReview,
         portfolioimages: JSON.parse(portfolioimages),
       });
@@ -103,11 +134,12 @@ export default {
     try {
       const {
         client,
+        name,
         description,
         problem,
         solution,
-        proyectType,
-        proyectLink,
+        projectType,
+        projectLink,
         clientReview,
         deletedImagesPublicID,
         portfolioimages,
@@ -128,11 +160,12 @@ export default {
         { _id: req.body._id },
         {
           client,
+          name,
           description,
           problem,
           solution,
-          proyectType,
-          proyectLink,
+          projectType,
+          projectLink,
           clientReview,
           portfolioimages: JSON.parse(portfolioimages),
         }

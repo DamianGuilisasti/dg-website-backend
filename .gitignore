@@ -1,3 +1,5 @@
 node_modules
 .env
 build
+Dockerfile
+docker-compose.yml
