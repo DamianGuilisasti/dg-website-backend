@@ -1,4 +1,4 @@
-import Slider from "../models/Sliders";
+import PortfolioSlider from "../models/PortfolioSlider";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 
@@ -17,8 +17,8 @@ export default {
     try {
       const sliders = req.body.sliders;
 
-      await Slider.deleteMany({});
-      await Slider.insertMany(sliders);
+      await PortfolioSlider.deleteMany({});
+      await PortfolioSlider.insertMany(sliders);
       res.status(200).json(sliders);
     } catch (error) {
       res.status(500).send({
@@ -29,7 +29,7 @@ export default {
   },
   list: async (req, res, next) => {
     try {
-      const result = await Slider.find();
+      const result = await PortfolioSlider.find();
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
@@ -40,12 +40,14 @@ export default {
   },
   add: async (req, res, next) => {
     try {
-      const { title, subtitle } = req.body;
+      const { title, subtitle, buttonText, buttonURL } = req.body;
       const result = await cloudinary.uploader.upload(req.file.path);
 
-      const newSlider = new Slider({
+      const newSlider = new PortfolioSlider({
         title,
         subtitle,
+        buttonText,
+        buttonURL,
         sliderImg: { public_id: result.public_id, url: result.url },
       });
 
@@ -64,20 +66,27 @@ export default {
     try {
       if (req.body.newSliderImg == "true") {
         const result = await cloudinary.uploader.upload(req.file.path);
-        const sliderUpdated = await Slider.findByIdAndUpdate(
+        const sliderUpdated = await PortfolioSlider.findByIdAndUpdate(
           { _id: req.body._id },
           {
             title: req.body.title,
             subtitle: req.body.subtitle,
+            buttonText: req.body.buttonText,
+            buttonURL: req.body.buttonURL,
             sliderImg: { public_id: result.public_id, url: result.url },
           },
           { new: true }
         );
         res.status(200).json(sliderUpdated);
       } else {
-        const sliderUpdated = await Slider.findByIdAndUpdate(
+        const sliderUpdated = await PortfolioSlider.findByIdAndUpdate(
           { _id: req.body._id },
-          { title: req.body.title, subtitle: req.body.subtitle },
+          {
+            title: req.body.title,
+            subtitle: req.body.subtitle,
+            buttonText: req.body.buttonText,
+            buttonURL: req.body.buttonURL,
+          },
           { new: true }
         );
         res.status(200).json(sliderUpdated);
@@ -91,7 +100,7 @@ export default {
   },
   deleteSliderById: async (req, res, next) => {
     try {
-      const reg = await Slider.findByIdAndDelete({ _id: req.query.id });
+      const reg = await PortfolioSlider.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
@@ -102,7 +111,7 @@ export default {
   },
   activateSliderById: async (req, res, next) => {
     try {
-      const sliderUpdated = await Slider.findByIdAndUpdate(
+      const sliderUpdated = await PortfolioSlider.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 1 },
         { new: true }
@@ -117,7 +126,7 @@ export default {
   },
   desactivateSliderById: async (req, res, next) => {
     try {
-      const sliderUpdated = await Slider.findByIdAndUpdate(
+      const sliderUpdated = await PortfolioSlider.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 0 },
         { new: true }

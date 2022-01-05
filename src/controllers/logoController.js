@@ -1,4 +1,4 @@
-import Logos from "../models/Logos";
+import Logo from "../models/Logo";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 
@@ -17,8 +17,8 @@ export default {
     try {
       const logos = req.body.logos;
 
-      await Logos.deleteMany({});
-      await Logos.insertMany(logos);
+      await Logo.deleteMany({});
+      await Logo.insertMany(logos);
       res.status(200).json(logos);
     } catch (error) {
       res.status(500).send({
@@ -29,7 +29,7 @@ export default {
   },
   list: async (req, res, next) => {
     try {
-      const result = await Logos.find();
+      const result = await Logo.find();
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
@@ -42,7 +42,7 @@ export default {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
 
-      const newLogo = new Logos({
+      const newLogo = new Logo({
         logoImg: { public_id: result.public_id, url: result.url },
       });
 
@@ -59,7 +59,7 @@ export default {
   },
   deleteLogoById: async (req, res, next) => {
     try {
-      const reg = await Logos.findByIdAndDelete({ _id: req.query.id });
+      const reg = await Logo.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
@@ -70,7 +70,7 @@ export default {
   },
   activateLogoById: async (req, res, next) => {
     try {
-      const logoUpdated = await Logos.findByIdAndUpdate(
+      const logoUpdated = await Logo.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 1 },
         { new: true }
@@ -85,7 +85,7 @@ export default {
   },
   desactivateLogoById: async (req, res, next) => {
     try {
-      const logoUpdated = await Logos.findByIdAndUpdate(
+      const logoUpdated = await Logo.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 0 },
         { new: true }

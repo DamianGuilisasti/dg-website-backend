@@ -1,57 +1,57 @@
 import express from "express";
-import SettingsController from "../controllers/SettingsController";
+import settingController from "../controllers/settingController";
 import upload from "../middlewares/upload";
 import verify from "../middlewares";
 
 const router = express.Router();
 
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.addSettings
+  settingController.addSettings
 );
-router.get("/list", SettingsController.listSettings);
+router.get("/", settingController.listSettings);
 router.put(
   "/updateInfo",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.updateInfo
+  settingController.updateInfo
 );
 router.put(
   "/updateSocialMedia",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.updateSocialMedia
+  settingController.updateSocialMedia
 );
 router.put(
   "/updateWhatsapp",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.updateWhatsapp
+  settingController.updateWhatsapp
 );
 router.put(
   "/updateLogo",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   upload,
-  SettingsController.updateLogo
+  settingController.updateLogo
 );
 router.put(
   "/updateCompanyURL",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.updateCompanyURL
+  settingController.updateCompanyURL
 );
 router.put(
   "/deleteLogo",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.deleteLogo
+  settingController.deleteLogo
 );
 router.put(
   "/updateCompanyImg",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   upload,
-  SettingsController.updateCompanyImg
+  settingController.updateCompanyImg
 );
 router.put(
   "/deleteCompanyImg",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SettingsController.deleteCompanyImg
+  settingController.deleteCompanyImg
 );
 
 export default router;

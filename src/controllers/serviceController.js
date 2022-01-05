@@ -1,4 +1,4 @@
-import Portfolio from "../models/Portfolio";
+import Service from "../models/Service";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
@@ -15,12 +15,8 @@ cloudinary.config({
 export default {
   list: async (req, res, next) => {
     try {
-      const reg = await Portfolio.find().populate("client category", {
-        _id: 1,
-        name: 1,
-        lastname: 1,
-      });
-      res.status(200).json(reg);
+      const result = await Service.find();
+      res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
         message: "Ocurrió un error",
@@ -28,60 +24,16 @@ export default {
       next(e);
     }
   },
-  listActives: async (req, res, next) => {
-    try {
-      const reg = await Portfolio.find({ state: 1 }).populate("client category", {
-        _id: 1,
-        name: 1,
-        lastname: 1,
-      });
-      res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "Ocurrió un error",
-      });
-      next(e);
-    }
-  },
-  getPortfolio: async (req, res, next) => {
-    try {
-      const slug = req.query[0];
-      const result = await Portfolio.findOne({ slug: slug }).populate("client category");
-      res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ message: "Ocurrió un error" });
-      next(error);
-    }
-  },
-  getRelatedProjects: async (req, res, next) => {
-    try {
-      const slug = req.body.slug;
-      const result = await Portfolio.find({
-        slug: { $ne: slug },
-        state: 1,
-      }).populate("client");
-      res.status(200).json(result);
-    } catch (error) {
-      console.log(error);
-      res.status(500).send({ message: "Ocurrió un error" });
-      next(error);
-    }
-  },
-
   add: async (req, res, next) => {
     try {
       const {
-        client,
-        description,
-        problem,
-        solution,
-        category,
-        link,
-        clientReview,
-        portfolioimages,
-        deletedImagesPublicID,
         name,
+        shortdescription,
+        description,
+        projectExample,
+        clientReview,
+        deletedImagesPublicID,
+        servicesimages,
       } = req.body;
 
       const slug = slugify(name).toLowerCase();
@@ -97,22 +49,20 @@ export default {
         });
       }
 
-      const newPortfolio = new Portfolio({
-        client,
+      const newService = new Service({
         name,
         slug,
+        shortdescription,
         description,
-        problem,
-        solution,
-        category,
-        link,
+        projectExample,
         clientReview,
-        portfolioimages: JSON.parse(portfolioimages),
+        deletedImagesPublicID,
+        servicesimages: JSON.parse(servicesimages),
       });
 
-      const portfolioSaved = await newPortfolio.save();
+      const serviceSaved = await newService.save();
 
-      res.status(200).json(portfolioSaved);
+      res.status(200).json(serviceSaved);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",
@@ -146,20 +96,17 @@ export default {
       next(error);
     }
   },
-  updatePortfolioById: async (req, res, next) => {
+  updateServiceById: async (req, res, next) => {
     try {
       const {
-        client,
         name,
         slug,
+        shortdescription,
         description,
-        problem,
-        solution,
-        category,
-        link,
+        projectExample,
         clientReview,
         deletedImagesPublicID,
-        portfolioimages,
+        servicesimages,
       } = req.body;
 
       if (deletedImagesPublicID) {
@@ -173,23 +120,21 @@ export default {
         });
       }
 
-      const portfolioUpdated = await Portfolio.findByIdAndUpdate(
+      const serviceUpdated = await Service.findByIdAndUpdate(
         { _id: req.body._id },
         {
-          client,
           name,
           slug,
+          shortdescription,
           description,
-          problem,
-          solution,
-          category,
-          link,
+          projectExample,
           clientReview,
-          portfolioimages: JSON.parse(portfolioimages),
+          deletedImagesPublicID,
+          servicesimages: JSON.parse(servicesimages),
         }
       );
 
-      res.status(200).json(portfolioUpdated);
+      res.status(200).json(serviceUpdated);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",
@@ -197,14 +142,36 @@ export default {
       next(error);
     }
   },
-  activatePortfolioById: async (req, res, next) => {
+  getService: async (req, res, next) => {
     try {
-      const portfolioUpdated = await Portfolio.findByIdAndUpdate(
+      const slug = req.query[0];
+      const result = await Service.findOne({ slug: slug }).populate("client");
+      res.status(200).json(result);
+    } catch (error) {
+      console.log(error);
+      res.status(500).send({ message: "Ocurrió un error" });
+      next(error);
+    }
+  },
+  deleteServiceById: async (req, res, next) => {
+    try {
+      const reg = await Service.findByIdAndDelete({ _id: req.query.id });
+      res.status(200).json(reg);
+    } catch (error) {
+      res.status(500).send({
+        message: "Ocurrió un error.",
+      });
+      next(error);
+    }
+  },
+  activateServiceById: async (req, res, next) => {
+    try {
+      const serviceUpdated = await Service.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 1 },
         { new: true }
       );
-      res.status(200).json(portfolioUpdated);
+      res.status(200).json(serviceUpdated);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",
@@ -212,26 +179,14 @@ export default {
       next(error);
     }
   },
-  desactivatePortfolioById: async (req, res, next) => {
+  desactivateServiceById: async (req, res, next) => {
     try {
-      const portfolioUpdated = await Portfolio.findByIdAndUpdate(
+      const serviceUpdated = await Service.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 0 },
         { new: true }
       );
-      res.status(200).json(portfolioUpdated);
-    } catch (error) {
-      res.status(500).send({
-        message: "Ocurrió un error.",
-      });
-      next(error);
-    }
-  },
-
-  deletePortfolioById: async (req, res, next) => {
-    try {
-      const reg = await Portfolio.findByIdAndDelete({ _id: req.query.id });
-      res.status(200).json(reg);
+      res.status(200).json(serviceUpdated);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",

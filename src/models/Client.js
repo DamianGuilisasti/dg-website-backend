@@ -18,39 +18,17 @@ const ClientSchema = new Schema(
       required: true,
       unique: true,
     },
-    /*     totalSpend: {
-      type: Number,
-    }, */
     phone: {
       type: Number,
       maxlength: 50,
     },
-    address: {
+    company: {
       type: String,
     },
-    /*     services: [
-      {
-        service: {
-          type: Schema.Types.ObjectId,
-          ref: "Services",
-        },
-        serviceDate: {
-          date: Date,
-        },
-      },
-    ], */
-    /*     services: [
-      {
-        service: {
-          type: Schema.Types.ObjectId,
-          ref: "Services",
-        }
-      },
-    ], */
     services: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Services",
+        ref: "ClientsServices",
       },
     ],
     state: {

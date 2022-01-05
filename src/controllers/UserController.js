@@ -1,7 +1,7 @@
 import User from "../models/User";
 import jwt from "jsonwebtoken";
 import config from "../config";
-import Roles from "../models/Roles";
+import Roles from "../models/Rol";
 import nodemailer from "../config/mailer";
 import crypto from "crypto";
 
@@ -98,8 +98,6 @@ export default {
       });
       const userSaved = await newUser.save();
       res.status(200).json(userSaved);
-      //const reg = await models.Post.create(req.body);
-      //res.status(200).json(reg);
     } catch (error) {
       console.log(error);
       res.status(500).send({
@@ -241,8 +239,8 @@ export default {
           let resetToken = await User.createPasswordResetToken();
           let passwordResetToken = await User.encryptPasswordResetToken(
             resetToken
-          ); //save the encrypted token on the database for mayor security.
-          let passwordResetExpires = await User.getPasswordResetExpires(); //get the date to allow the customer to reset the password for up to 10 mins
+          );
+          let passwordResetExpires = await User.getPasswordResetExpires();
 
           await User.findOneAndUpdate(
             { email: email },

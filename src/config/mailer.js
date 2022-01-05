@@ -25,17 +25,15 @@ var from = '"Damián Guilisasti" <hola@damianguilisasti.com.ar>';
 var url = {
   host: "localhost",
   port: 4000,
-  path: "/api/settings/list",
+  path: "/api/settings",
   method: "GET",
 };
 http
   .get(url, (resp) => {
     let data = "";
-    // A chunk of data has been recieved.
     resp.on("data", (chunk) => {
       data += chunk;
     });
-    // The whole response has been received. Print out the result.
     resp.on("end", () => {
       let bodyData = JSON.parse(data)[0];
       showData(bodyData);

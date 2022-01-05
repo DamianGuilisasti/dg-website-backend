@@ -1,5 +1,5 @@
 import express from "express";
-import BudgetsController from "../controllers/BudgetsController";
+import budgetController from "../controllers/budgetController";
 import uploadPDF from "../middlewares/uploadPDF";
 import uploadBill from "../middlewares/uploadBill";
 import verify from "../middlewares/index";
@@ -7,51 +7,51 @@ import verify from "../middlewares/index";
 const router = express.Router();
 
 router.get(
-  "/list",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.list
+  budgetController.list
 );
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.add
+  budgetController.add
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.updateBudgetById
+  budgetController.updateBudgetById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.activateBudgetById
+  budgetController.activateBudgetById
 );
 router.put(
   "/approved",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.approvedBudgetById
+  budgetController.approvedBudgetById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.desactivateBudgetById
+  budgetController.desactivateBudgetById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.deleteBudgetById
+  budgetController.deleteBudgetById
 );
 router.post(
   "/uploadPDF",
   uploadPDF,
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.uploadPDF
+  budgetController.uploadPDF
 );
 router.post(
   "/uploadBillPDF",
   uploadBill,
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  BudgetsController.sendEmailManually
+  budgetController.sendEmailManually
 );
 
 export default router;

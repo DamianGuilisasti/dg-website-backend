@@ -1,38 +1,38 @@
 import express from "express";
-import ExpensesController from "../controllers/ExpensesController";
+import expenseController from "../controllers/expenseController";
 import verify from "../middlewares";
 
 const router = express.Router();
 
 router.get(
-  "/list",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ExpensesController.list
+  expenseController.list
 );
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ExpensesController.add
+  expenseController.add
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ExpensesController.updateExpenseById
+  expenseController.updateExpenseById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ExpensesController.activateExpenseById
+  expenseController.activateExpenseById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ExpensesController.desactivateExpenseById
+  expenseController.desactivateExpenseById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ExpensesController.deleteExpenseById
+  expenseController.deleteExpenseById
 );
 
 export default router;

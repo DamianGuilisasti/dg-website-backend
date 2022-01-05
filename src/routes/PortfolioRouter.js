@@ -1,43 +1,44 @@
+import portfolioController from "../controllers/portfolioController";
 import express from "express";
-import PortfolioController from "../controllers/PortfolioController";
 import upload from "../middlewares/uploadMultipleFiles";
 import verify from "../middlewares";
 
 const router = express.Router();
 
-router.get("/list", PortfolioController.list);
-router.get("/query", PortfolioController.getPortfolio);
-router.post("/relatedprojects", PortfolioController.getRelatedProjects);
+router.get("/", portfolioController.list);
+router.get("/listActives", portfolioController.listActives);
+router.get("/portfolio", portfolioController.getPortfolio);
+router.post("/relatedprojects", portfolioController.getRelatedProjects);
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  PortfolioController.add
+  portfolioController.add
 );
 router.post(
   "/uploadimage",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   upload,
-  PortfolioController.uploadimage
+  portfolioController.uploadimage
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  PortfolioController.updatePortfolioById
+  portfolioController.updatePortfolioById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  PortfolioController.activatePortfolioById
+  portfolioController.activatePortfolioById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  PortfolioController.desactivatePortfolioById
+  portfolioController.desactivatePortfolioById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  PortfolioController.deletePortfolioById
+  portfolioController.deletePortfolioById
 );
 
 export default router;

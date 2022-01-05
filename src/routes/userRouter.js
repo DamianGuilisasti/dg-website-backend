@@ -1,52 +1,53 @@
 import { Router } from "express";
-import UserController from "../controllers/UserController";
+import userController from "../controllers/userController";
 import verify from "../middlewares";
+import { checkDuplicateUsernameOrEmail } from "../middlewares/verifyRegister.js";
 
 const router = Router();
 
-router.post("/login", UserController.login);
+router.post("/login", userController.login);
 router.post(
   "/register",
-  verify.verifyRegister.checkDuplicateUsernameOrEmail,
-  UserController.register
+  checkDuplicateUsernameOrEmail,
+  userController.register
 );
 router.get(
-  "/list",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.list
+  userController.list
 );
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.add
+  userController.add
 );
 router.put(
   "/updateInEditAccount",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.updateInEditAccount
+  userController.updateInEditAccount
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.update
+  userController.update
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.activate
+  userController.activate
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.desactivate
+  userController.desactivate
 );
 router.delete(
-  "/remove",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  UserController.delete
+  userController.delete
 );
-router.get("/query", [verify.verifyToken.verify], UserController.query);
-router.post("/forgotpassword", UserController.forgotPassword);
-router.post("/resetpassword/:token", UserController.resetPassword);
+router.get("/user", [verify.verifyToken.verify], userController.query);
+router.post("/forgotpassword", userController.forgotPassword);
+router.post("/resetpassword/:token", userController.resetPassword);
 
 export default router;

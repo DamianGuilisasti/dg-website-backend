@@ -1,6 +1,6 @@
-import Budget from "../models/Budgets";
+import Budget from "../models/Budget";
 import mailer from "../config/mailer";
-import fs from 'fs-extra';
+import fs from "fs-extra";
 
 export default {
   list: async (req, res, next) => {
@@ -30,8 +30,6 @@ export default {
       const newBudget = new Budget({ client, services });
       const BudgetSaved = await newBudget.save();
       res.status(200).json(BudgetSaved);
-      //const reg = await models.Post.create(req.body);
-      //res.status(200).json(reg);
     } catch (error) {
       console.log(error);
       res.status(500).send({
@@ -114,7 +112,11 @@ export default {
   },
   sendEmailManually: async (req, res, next) => {
     try {
-      await mailer.sendBillManually(req.body.email, req.body.name, req.body.subject);
+      await mailer.sendBillManually(
+        req.body.email,
+        req.body.name,
+        req.body.subject
+      );
       await fs.unlink(req.file.path);
       res.status(200).send({
         message: "Email enviado",

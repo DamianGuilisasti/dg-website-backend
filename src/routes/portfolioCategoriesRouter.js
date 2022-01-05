@@ -1,42 +1,34 @@
 import express from "express";
-import SlidersController from "../controllers/SlidersController";
-import upload from "../middlewares/upload";
+import portfolioCategoriesController from "../controllers/portfolioCategoriesController";
 import verify from "../middlewares";
 
 const router = express.Router();
 
-router.get("/list", SlidersController.list);
+router.get("/", portfolioCategoriesController.list);
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
-  SlidersController.add
+  portfolioCategoriesController.add
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
-  SlidersController.updateSliderById
+  portfolioCategoriesController.updatePortfolioCategoriesById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SlidersController.activateSliderById
+  portfolioCategoriesController.activatePortfolioCategoriesById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SlidersController.desactivateSliderById
+  portfolioCategoriesController.desactivatePortfolioCategoriesById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SlidersController.deleteSliderById
-);
-router.post(
-  "/updateIndex",
-  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  SlidersController.updateIndex
+  portfolioCategoriesController.deletePortfolioCategoriesById
 );
 
 export default router;

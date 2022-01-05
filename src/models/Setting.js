@@ -47,7 +47,7 @@ const SettingSchema = new Schema(
     },
     whatsapp: {
       phone: {
-        type: Number,
+        type: String,
       },
       text: {
         type: String,

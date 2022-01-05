@@ -9,7 +9,7 @@ const BudgetSchema = new Schema(
     services: [
       {
         type: Schema.Types.ObjectId,
-        ref: "Services",
+        ref: "ClientsServices",
       },
     ],
     state: {

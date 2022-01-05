@@ -1,9 +1,8 @@
 import express from "express";
-import verify from "../middlewares";
-import RolController from "../controllers/RolController";
+import rolController from "../controllers/rolController";
 
 const router = express.Router();
 
-router.get("/list", RolController.list);
+router.get("/", rolController.list);
 
 export default router;

@@ -1,14 +1,14 @@
 import express from "express";
-import PostsController from "../controllers/PostsController";
+import postController from "../controllers/postController";
 import verify from "../middlewares";
 
 const router = express.Router();
 
-router.get("/list", PostsController.list);
+router.get("/", postController.list);
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  PostsController.add
+  postController.add
 );
 
 export default router;

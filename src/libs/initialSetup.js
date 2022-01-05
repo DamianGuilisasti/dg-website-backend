@@ -1,16 +1,16 @@
-import Roles from "../models/Roles";
+import Rol from "../models/Rol";
 import User from "../models/User";
 
 export default {
   createRoles: async () => {
     try {
-      const counter = await Roles.countDocuments({}).exec();
+      const counter = await Rol.countDocuments({}).exec();
 
       if (counter > 0) return;
 
       await Promise.all([
-        new Roles({ name: "Cliente" }).save(),
-        new Roles({ name: "Admin" }).save(),
+        new Rol({ name: "Cliente" }).save(),
+        new Rol({ name: "Admin" }).save(),
       ]);
     } catch (error) {
       console.log(error);
@@ -22,7 +22,7 @@ export default {
 
       if (counter > 0) return;
 
-      const rolId = await Roles.find({ name: { $in: "Admin" } });
+      const rolId = await Rol.find({ name: { $in: "Admin" } });
 
       let rol_id = "";
 

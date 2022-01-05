@@ -1,4 +1,4 @@
-import Settings from "../models/Settings";
+import Setting from "../models/Setting";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
@@ -24,7 +24,7 @@ export default {
         companyEmail,
         companyAddress,
       } = req.body;
-      const newConfiguration = new Settings({
+      const newConfiguration = new Setting({
         aboutInfo,
         companyName,
         socialMedia,
@@ -47,7 +47,7 @@ export default {
   },
   listSettings: async (req, res, next) => {
     try {
-      const settings = await Settings.find();
+      const settings = await Setting.find();
       res.status(200).json(settings);
     } catch (error) {
       console.log(error);
@@ -59,7 +59,7 @@ export default {
   },
   updateInfo: async (req, res, next) => {
     try {
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           aboutInfo: req.body.aboutInfo,
@@ -80,7 +80,7 @@ export default {
   },
   updateSocialMedia: async (req, res, next) => {
     try {
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           socialMedia: {
@@ -105,7 +105,7 @@ export default {
   },
   updateWhatsapp: async (req, res, next) => {
     try {
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           whatsapp: {
@@ -127,7 +127,7 @@ export default {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
 
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           logoURL: {
@@ -152,7 +152,7 @@ export default {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);
 
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           companyImg: {
@@ -175,7 +175,7 @@ export default {
   },
   updateCompanyURL: async (req, res, next) => {
     try {
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           companyURL: req.body.companyURL,
@@ -192,7 +192,7 @@ export default {
   },
   deleteLogo: async (req, res, next) => {
     try {
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           logoURL: {
@@ -213,7 +213,7 @@ export default {
   },
   deleteCompanyImg: async (req, res, next) => {
     try {
-      const reg = await Settings.findByIdAndUpdate(
+      const reg = await Setting.findByIdAndUpdate(
         { _id: req.body._id },
         {
           companyImg: {

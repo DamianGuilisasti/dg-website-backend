@@ -2,6 +2,11 @@ import { Schema, model } from "mongoose";
 
 const PortfolioSchema = new Schema(
   {
+    category: {
+      type: Schema.Types.ObjectId,
+      ref: "PortfolioCategories",
+      required: true,
+    },
     client: {
       type: Schema.Types.ObjectId,
       ref: "Clients",
@@ -26,10 +31,7 @@ const PortfolioSchema = new Schema(
     solution: {
       type: String,
     },
-    projectType: {
-      type: String,
-    },
-    projectLink: {
+    link: {
       type: String,
     },
     clientReview: {

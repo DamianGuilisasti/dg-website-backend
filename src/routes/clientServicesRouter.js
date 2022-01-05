@@ -1,37 +1,34 @@
 import express from "express";
 import verify from "../middlewares";
-import ServicesController from "../controllers/ServicesController";
+import clientServicesController from "../controllers/clientServicesController";
 
 const router = express.Router();
 
-router.get(
-  "/list",
-  ServicesController.list
-);
+router.get("/", clientServicesController.list);
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ServicesController.add
+  clientServicesController.add
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ServicesController.updateServiceById
+  clientServicesController.updateServiceById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ServicesController.activateServiceById
+  clientServicesController.activateServiceById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ServicesController.desactivateServiceById
+  clientServicesController.desactivateServiceById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ServicesController.deleteServiceById
+  clientServicesController.deleteServiceById
 );
 
 export default router;

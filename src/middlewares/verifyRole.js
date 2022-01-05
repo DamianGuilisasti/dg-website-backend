@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken";
 import User from "../models/User";
-import Roles from "../models/Roles";
+import Roles from "../models/Rol";
 import config from "../config";
 
 export default {

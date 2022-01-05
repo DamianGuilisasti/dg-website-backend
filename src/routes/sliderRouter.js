@@ -1,44 +1,42 @@
 import express from "express";
-import ClientsController from "../controllers/ClientsController";
+import sliderController from "../controllers/sliderController";
+import upload from "../middlewares/upload";
 import verify from "../middlewares";
 
 const router = express.Router();
 
-router.get("/list", ClientsController.list);
+router.get("/", sliderController.list);
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.add
+  upload,
+  sliderController.add
 );
 router.put(
-  "/update",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.updateClientById
+  upload,
+  sliderController.updateSliderById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.activateClientById
+  sliderController.activateSliderById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.desactivateClientById
+  sliderController.desactivateSliderById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.deleteClientById
+  sliderController.deleteSliderById
 );
-router.put(
-  "/clientIsPaid",
+router.post(
+  "/updateIndex",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.clientPaidById
-);
-router.put(
-  "/clientIsNotPaid",
-  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  ClientsController.clientNotPaidById
+  sliderController.updateIndex
 );
 
 export default router;

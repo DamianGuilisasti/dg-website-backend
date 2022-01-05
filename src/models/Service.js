@@ -4,20 +4,38 @@ const ServicesSchema = new Schema(
   {
     name: {
       type: String,
-      maxlength: 50,
+      unique: true,
       required: true,
     },
-    price: {
-      type: Number,
+    slug: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    shortdescription: {
+      type: String,
     },
     description: {
       type: String,
     },
-    serviceType: {
+    clientReview: {
       type: String,
-      enum: ["Mensual", "Anual", "Fijo"],
-      required: true,
-      default: 'Mensual'
+    },
+    servicesimages: [
+      {
+        public_id: {
+          type: String,
+        },
+        url: {
+          type: String,
+        },
+        index: {
+          type: String,
+        },
+      },
+    ],
+    projectExample: {
+      type: String,
     },
     state: {
       type: Number,

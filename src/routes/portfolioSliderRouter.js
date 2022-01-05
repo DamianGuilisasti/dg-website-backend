@@ -1,36 +1,42 @@
 import express from "express";
-import LogosController from "../controllers/LogosController";
+import sliderController from "../controllers/portfolioSliderController";
 import upload from "../middlewares/upload";
 import verify from "../middlewares";
 
 const router = express.Router();
 
-router.get("/list", LogosController.list);
+router.get("/", sliderController.list);
 router.post(
-  "/add",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   upload,
-  LogosController.add
+  sliderController.add
+);
+router.put(
+  "/",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  upload,
+  sliderController.updateSliderById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  LogosController.activateLogoById
+  sliderController.activateSliderById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  LogosController.desactivateLogoById
+  sliderController.desactivateSliderById
 );
 router.delete(
-  "/delete",
+  "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  LogosController.deleteLogoById
+  sliderController.deleteSliderById
 );
 router.post(
   "/updateIndex",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  LogosController.updateIndex
+  sliderController.updateIndex
 );
 
 export default router;

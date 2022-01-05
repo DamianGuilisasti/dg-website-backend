@@ -1,9 +1,9 @@
-import Service from "../models/Services";
+import Expense from "../models/Expense";
 
 export default {
   list: async (req, res, next) => {
     try {
-      const result = await Service.find();
+      const result = await Expense.find();
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
@@ -14,12 +14,10 @@ export default {
   },
   add: async (req, res, next) => {
     try {
-      const { name, description, price, serviceType } = req.body;
-      const newService = new Service({ name, description, price, serviceType });
-      const serviceSaved = await newService.save();
-      res.status(200).json(serviceSaved);
-      //const reg = await models.Post.create(req.body);
-      //res.status(200).json(reg);
+      const { name, price } = req.body;
+      const newExpense = new Expense({ name, price });
+      const expenseSaved = await newExpense.save();
+      res.status(200).json(expenseSaved);
     } catch (error) {
       console.log(error);
       res.status(500).send({
@@ -28,14 +26,14 @@ export default {
       next(error);
     }
   },
-  updateServiceById: async (req, res, next) => {
+  updateExpenseById: async (req, res, next) => {
     try {
-      const serviceUpdated = await Service.findByIdAndUpdate(
+      const expenseUpdated = await Expense.findByIdAndUpdate(
         { _id: req.body._id },
         req.body,
         { new: true }
       );
-      res.status(200).json(serviceUpdated);
+      res.status(200).json(expenseUpdated);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",
@@ -43,9 +41,9 @@ export default {
       next(error);
     }
   },
-  deleteServiceById: async (req, res, next) => {
+  deleteExpenseById: async (req, res, next) => {
     try {
-      const reg = await Service.findByIdAndDelete({ _id: req.query.id });
+      const reg = await Expense.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
@@ -54,14 +52,14 @@ export default {
       next(error);
     }
   },
-  activateServiceById: async (req, res, next) => {
+  activateExpenseById: async (req, res, next) => {
     try {
-      const serviceUpdated = await Service.findByIdAndUpdate(
+      const expenseUpdated = await Expense.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 1 },
         { new: true }
       );
-      res.status(200).json(serviceUpdated);
+      res.status(200).json(expenseUpdated);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",
@@ -69,14 +67,14 @@ export default {
       next(error);
     }
   },
-  desactivateServiceById: async (req, res, next) => {
+  desactivateExpenseById: async (req, res, next) => {
     try {
-      const serviceUpdated = await Service.findByIdAndUpdate(
+      const expenseUpdated = await Expense.findByIdAndUpdate(
         { _id: req.body._id },
         { state: 0 },
         { new: true }
       );
-      res.status(200).json(serviceUpdated);
+      res.status(200).json(expenseUpdated);
     } catch (error) {
       res.status(500).send({
         message: "Ocurrió un error.",

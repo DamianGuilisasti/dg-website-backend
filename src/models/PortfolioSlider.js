@@ -16,12 +16,17 @@ const sliderSchema = new Schema(
     subtitle: {
       type: String,
     },
+    buttonText: {
+      type: String,
+    },
+    buttonURL: {
+      type: String,
+    },
   },
   {
     timestamps: true,
-    collection: "Sliders",
+    collection: "PortfolioSlider",
   }
 );
 
-export default model("Slider", sliderSchema);
-
+export default model("PortfolioSlider", sliderSchema);

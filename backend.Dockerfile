@@ -1,10 +1,8 @@
-FROM node:14.15.1
+FROM node:alpine
 
-RUN mkdir -p /usr/src/app
+WORKDIR /backend
 
-WORKDIR /usr/src/app
-
-COPY package*.json ./
+COPY package*.json .
 
 RUN npm install
 
