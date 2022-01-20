@@ -60,6 +60,15 @@ export default {
   deleteLogoById: async (req, res, next) => {
     try {
       const reg = await Logo.findByIdAndDelete({ _id: req.query.id });
+
+      await cloudinary.uploader.destroy(
+        reg.logoImg.public_id,
+        function (result, error) {
+          if (error) {
+            console.log(error);
+          }
+        }
+      );
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({

@@ -41,7 +41,6 @@ export default {
       if (deletedImagesPublicID) {
         deletedImagesPublicID.map(async function (i) {
           await cloudinary.uploader.destroy(i, function (result, error) {
-            console.log(result);
             if (error) {
               console.log(error);
             }
@@ -112,7 +111,6 @@ export default {
       if (deletedImagesPublicID) {
         deletedImagesPublicID.map(async function (i) {
           await cloudinary.uploader.destroy(i, function (result, error) {
-            console.log(result);
             if (error) {
               console.log(error);
             }

@@ -202,6 +202,15 @@ export default {
         }
       );
 
+      await cloudinary.uploader.destroy(
+        reg.logoURL.public_id,
+        function (result, error) {
+          if (error) {
+            console.log(error);
+          }
+        }
+      );
+
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
@@ -220,6 +229,17 @@ export default {
             public_id: "",
             imageURL: "",
           },
+        }
+      );
+
+      console.log(reg);
+
+      await cloudinary.uploader.destroy(
+        reg.companyImg.public_id,
+        function (result, error) {
+          if (error) {
+            console.log(error);
+          }
         }
       );
 

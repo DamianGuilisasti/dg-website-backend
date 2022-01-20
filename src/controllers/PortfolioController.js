@@ -60,7 +60,7 @@ export default {
       const result = await Portfolio.find({
         slug: { $ne: slug },
         state: 1,
-      }).populate("client");
+      }).populate("client category");
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
