@@ -22,9 +22,9 @@ export default {
       res.status(200).json(logos);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   list: async (req, res, next) => {
@@ -33,7 +33,7 @@ export default {
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -52,7 +52,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -72,9 +72,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activateLogoById: async (req, res, next) => {
@@ -87,9 +87,9 @@ export default {
       res.status(200).json(logoUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivateLogoById: async (req, res, next) => {
@@ -102,9 +102,9 @@ export default {
       res.status(200).json(logoUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 };

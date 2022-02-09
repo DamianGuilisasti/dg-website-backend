@@ -16,9 +16,4 @@ const PortfolioCategoriesSchema = new Schema(
   }
 );
 
-const PortfolioCategories = model(
-  "PortfolioCategories",
-  PortfolioCategoriesSchema
-);
-
-export default PortfolioCategories;
+module.exports = model("PortfolioCategories", PortfolioCategoriesSchema);

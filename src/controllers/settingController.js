@@ -40,7 +40,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -52,7 +52,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -73,7 +73,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -98,7 +98,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -118,7 +118,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -143,7 +143,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -168,7 +168,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -185,7 +185,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -215,7 +215,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -247,7 +247,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }

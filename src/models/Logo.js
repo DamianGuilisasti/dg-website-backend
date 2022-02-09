@@ -17,5 +17,4 @@ const sliderSchema = new Schema(
   }
 );
 
-export default model("Logos", sliderSchema);
-
+module.exports = model("Logos", sliderSchema);

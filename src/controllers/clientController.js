@@ -14,7 +14,7 @@ export default {
       res.status(200).json(reg);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -35,7 +35,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -50,9 +50,9 @@ export default {
       res.status(200).json(clientUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activateClientById: async (req, res, next) => {
@@ -65,9 +65,9 @@ export default {
       res.status(200).json(clientUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivateClientById: async (req, res, next) => {
@@ -80,9 +80,9 @@ export default {
       res.status(200).json(clientUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   clientPaidById: async (req, res, next) => {
@@ -95,9 +95,9 @@ export default {
       res.status(200).json(clientUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   clientNotPaidById: async (req, res, next) => {
@@ -110,9 +110,9 @@ export default {
       res.status(200).json(clientUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   deleteClientById: async (req, res, next) => {
@@ -132,9 +132,9 @@ export default {
       });
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   getMonthlyPayments: async (req, res, next) => {
@@ -146,8 +146,8 @@ export default {
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: "Ocurrió un error" });
-      next(error);
+      res.status(500).send({ message: "An error has occured" });
+      return next(error);
     }
   },
   getAnnualPayments: async (req, res, next) => {
@@ -159,8 +159,8 @@ export default {
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: "Ocurrió un error" });
-      next(error);
+      res.status(500).send({ message: "An error has occured" });
+      return next(error);
     }
   },
 };

@@ -17,7 +17,7 @@ export default {
       }
     }
 
-    return res.status(403).json({ message: "Requiere Admin" });
+    return res.status(403).json({ message: "Not Authorized" });
   },
 
   isClient: async (req, res, next) => {
@@ -27,13 +27,12 @@ export default {
     const roles = await Roles.find({ _id: { $in: user.rol } });
 
     for (let i = 0; i < roles.length; i++) {
-      if (roles[i].name === "Cliente") {
+      if (roles[i].name === "Client") {
         next();
         return;
       }
     }
 
-    return res.status(403).json({ message: "Requiere Cliente" });
+    return res.status(403).json({ message: "Not Authorized" });
   },
 };
-

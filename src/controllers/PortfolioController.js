@@ -23,22 +23,25 @@ export default {
       res.status(200).json(reg);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
   },
   listActives: async (req, res, next) => {
     try {
-      const reg = await Portfolio.find({ state: 1 }).populate("client category", {
-        _id: 1,
-        name: 1,
-        lastname: 1,
-      });
+      const reg = await Portfolio.find({ state: 1 }).populate(
+        "client category",
+        {
+          _id: 1,
+          name: 1,
+          lastname: 1,
+        }
+      );
       res.status(200).json(reg);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -46,12 +49,14 @@ export default {
   getPortfolio: async (req, res, next) => {
     try {
       const slug = req.query[0];
-      const result = await Portfolio.findOne({ slug: slug }).populate("client category");
+      const result = await Portfolio.findOne({ slug: slug }).populate(
+        "client category"
+      );
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: "Ocurrió un error" });
-      next(error);
+      res.status(500).send({ message: "An error has occured" });
+      return next(error);
     }
   },
   getRelatedProjects: async (req, res, next) => {
@@ -64,8 +69,8 @@ export default {
       res.status(200).json(result);
     } catch (error) {
       console.log(error);
-      res.status(500).send({ message: "Ocurrió un error" });
-      next(error);
+      res.status(500).send({ message: "An error has occured" });
+      return next(error);
     }
   },
 
@@ -115,9 +120,9 @@ export default {
       res.status(200).json(portfolioSaved);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   uploadimage: async (req, res, next) => {
@@ -141,9 +146,9 @@ export default {
       res.status(200).json(images);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   updatePortfolioById: async (req, res, next) => {
@@ -192,9 +197,9 @@ export default {
       res.status(200).json(portfolioUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activatePortfolioById: async (req, res, next) => {
@@ -207,9 +212,9 @@ export default {
       res.status(200).json(portfolioUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivatePortfolioById: async (req, res, next) => {
@@ -222,9 +227,9 @@ export default {
       res.status(200).json(portfolioUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 
@@ -234,9 +239,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 };

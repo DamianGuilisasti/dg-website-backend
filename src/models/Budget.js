@@ -23,6 +23,4 @@ const BudgetSchema = new Schema(
   }
 );
 
-const Budgets = model("Budgets", BudgetSchema);
-
-export default Budgets;
+module.exports = model("Budgets", BudgetSchema);

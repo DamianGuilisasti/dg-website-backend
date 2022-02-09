@@ -1,13 +1,17 @@
 import { Schema, model } from "mongoose";
 
-const ExpensesSchema = new Schema(
+const MenusSchema = new Schema(
   {
     name: {
       type: String,
       maxlength: 50,
       required: true,
     },
-    price: {
+    link: {
+      type: String,
+      required: true,
+    },
+    order: {
       type: Number,
     },
     state: {
@@ -17,8 +21,8 @@ const ExpensesSchema = new Schema(
   },
   {
     timestamps: true,
-    collection: "Expenses",
+    collection: "Menus",
   }
 );
 
-module.exports = model("Expenses", ExpensesSchema);
+module.exports = model("Menus", MenusSchema);

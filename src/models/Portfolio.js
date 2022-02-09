@@ -44,6 +44,7 @@ const PortfolioSchema = new Schema(
         },
         url: {
           type: String,
+          required: true,
         },
         index: {
           type: String,
@@ -61,6 +62,4 @@ const PortfolioSchema = new Schema(
   }
 );
 
-const Portfolios = model("Portfolios", PortfolioSchema);
-
-export default Portfolios;
+module.exports = model("Portfolios", PortfolioSchema);

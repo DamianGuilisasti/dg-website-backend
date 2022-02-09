@@ -22,9 +22,9 @@ export default {
       res.status(200).json(sliders);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   list: async (req, res, next) => {
@@ -33,7 +33,7 @@ export default {
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -57,7 +57,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).json({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -93,9 +93,9 @@ export default {
       }
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   deleteSliderById: async (req, res, next) => {
@@ -104,9 +104,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activateSliderById: async (req, res, next) => {
@@ -119,9 +119,9 @@ export default {
       res.status(200).json(sliderUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivateSliderById: async (req, res, next) => {
@@ -134,9 +134,9 @@ export default {
       res.status(200).json(sliderUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 };

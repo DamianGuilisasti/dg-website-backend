@@ -14,6 +14,8 @@ import portfolioCategoriesRouter from "./portfolioCategoriesRouter";
 import logoRouter from "./logoRouter";
 import portfolioRouter from "./portfolioRouter";
 import reviewRouter from "./reviewRouter";
+import menuRouter from "./menuRouter";
+
 
 const router = express.Router();
 
@@ -32,5 +34,6 @@ router.use("/portfolios", portfolioRouter);
 router.use("/portfoliosliders", portfolioSliderRouter);
 router.use("/portfoliocategories", portfolioCategoriesRouter);
 router.use("/reviews", reviewRouter);
+router.use("/menus", menuRouter);
 
 export default router;

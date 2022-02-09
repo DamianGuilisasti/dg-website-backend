@@ -54,8 +54,8 @@ function showData(bodyData) {
     googleURL = bodyData.socialMedia.google;
     youtubeURL = bodyData.socialMedia.youtube;
     companyName = bodyData.companyName;
-    //companyImg = bodyData.companyImg.imageURL;
-    //companyURL = bodyData.companyURL.imageURL;
+    companyImg = bodyData.companyImg.imageURL;
+    companyURL = bodyData.companyURL.imageURL;
   }
 }
 
@@ -63,7 +63,7 @@ function whatsapp() {
   return (
     "https://wa.me/" +
     whatsappURL +
-    "?text=Hola Damián, te quería consultar lo siguiente: "
+    "?text=Hola Damián, te quería consultar lo siguiente: " //modificar esto.
   );
 }
 

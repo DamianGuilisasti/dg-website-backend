@@ -73,4 +73,4 @@ UserSchema.statics.getPasswordResetExpires = () => {
   return Date.now() + 10 * 60 * 1000;
 };
 
-export default model("User", UserSchema);
+module.exports = model("User", UserSchema);

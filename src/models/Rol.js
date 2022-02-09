@@ -12,4 +12,4 @@ const rolSchema = new Schema(
   }
 );
 
-export default model("Rol", rolSchema);
+module.exports = model("Rol", rolSchema);

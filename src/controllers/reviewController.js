@@ -29,7 +29,7 @@ export default {
       }
     } catch (error) {
       console.log(error);
-      next(error);
+      return next(error);
     }
   },
   list: async (req, res, next) => {
@@ -38,7 +38,7 @@ export default {
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -72,9 +72,9 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   uploadimage: async (req, res, next) => {
@@ -84,9 +84,9 @@ export default {
       res.status(200).json(Logo);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   updateReviewById: async (req, res, next) => {
@@ -95,8 +95,6 @@ export default {
       console.log(req.body.newLogo);
       console.log(req.body);
       if (req.body.deletedLogoId && req.body.newLogo) {
-        //Estoy mas que conforme con el trabajo de Damián , supo quitar todas mis dudas , siempre ha Sido muy atento y claro con todos los detalles.  EXCELENTE. Desempeño....Muchas gracias 😁
-        //me falta la opción por si no modifiqué el logo.
         const reviewUpdated = await Review.findByIdAndUpdate(
           { _id: req.body._id },
           {
@@ -128,9 +126,9 @@ export default {
       }
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   deleteReviewById: async (req, res, next) => {
@@ -139,9 +137,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activateReviewById: async (req, res, next) => {
@@ -154,9 +152,9 @@ export default {
       res.status(200).json(reviewUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivateReviewById: async (req, res, next) => {
@@ -169,9 +167,9 @@ export default {
       res.status(200).json(reviewUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 };

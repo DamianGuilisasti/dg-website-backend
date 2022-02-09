@@ -1,38 +1,38 @@
 import express from "express";
-import expenseController from "../controllers/expenseController";
+import menuController from "../controllers/menuController";
 import verify from "../middlewares";
 
 const router = express.Router();
 
 router.get(
   "/",
-  /* [verify.verifyToken.verify, verify.verifyRole.isAdmin], */
-  expenseController.list
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  menuController.list
 );
 router.post(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  expenseController.create
+  menuController.create
 );
 router.put(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  expenseController.updateExpenseById
+  menuController.updateMenuById
 );
 router.put(
   "/activate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  expenseController.activateExpenseById
+  menuController.activateMenuById
 );
 router.put(
   "/desactivate",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  expenseController.desactivateExpenseById
+  menuController.desactivateMenuById
 );
 router.delete(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  expenseController.deleteExpenseById
+  menuController.deleteMenuById
 );
 
 export default router;

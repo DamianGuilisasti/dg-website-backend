@@ -9,7 +9,7 @@ export default {
 
       if (!token) {
         return res.status(403).send({
-          message: "No token",
+          message: "No Token",
         });
       }
 
@@ -17,12 +17,11 @@ export default {
 
       const user = await User.findById(tokenDecoded.id);
 
-      if (!user) return res.status(404).json({ message: "No user found" });
+      if (!user) return res.status(404).json({ message: "No User Found" });
 
       next();
     } catch (error) {
-
-      return res.status(401).json({ message: "No autorizado" });
+      return res.status(401).json({ message: "Not Authorized" });
     }
   },
 };

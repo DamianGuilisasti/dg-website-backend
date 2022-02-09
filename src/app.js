@@ -25,6 +25,7 @@ app.set("port", process.env.PORT || 4000);
 async function start() {
   await initialSetup.createRoles();
   await initialSetup.createFirstUser();
+  await initialSetup.initializeDatabase();
 }
 
 // Middlewares
@@ -44,9 +45,11 @@ app.use(express.static(__dirname + "/public"));
 
 // Start the Server
 
-app.listen(app.get("port"), () => {
+const server = app.listen(app.get("port"), () => {
   console.log("Server on port: ", app.get("port"));
   console.log("Environment: ", process.env.NODE_ENV || "Producción");
 });
 
 start();
+
+module.exports = { app, server };

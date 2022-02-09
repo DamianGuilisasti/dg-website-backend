@@ -29,4 +29,4 @@ const sliderSchema = new Schema(
   }
 );
 
-export default model("Slider", sliderSchema);
+module.exports = model("Slider", sliderSchema);

@@ -7,7 +7,7 @@ export default {
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }

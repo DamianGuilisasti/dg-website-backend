@@ -1,28 +1,17 @@
 import mongoose from "mongoose";
 
-import dotenv from "dotenv";
+const { MONGODB_URI_TEST, MONGODB_URI, NODE_ENV } = process.env;
 
-dotenv.config();
-
-function databaseUri() {
-  if (process.env.NODE_ENV == "production") return process.env.MONGODB_URI;
-  else
-    return `mongodb://${process.env.MONGODB_HOST}/${process.env.MONGODB_DATABASE}`;
-}
-
-// Docker Uri
-//"mongodb://mongo:27017/dgwebsite"
+const connectionString =
+  NODE_ENV === "production" ? MONGODB_URI : MONGODB_URI_TEST;
 
 mongoose
-  .connect(
-    databaseUri(), //en desarrollo
-    {
-      useUnifiedTopology: true,
-      useNewUrlParser: true,
-      useCreateIndex: true,
-      useFindAndModify: true,
-    }
-  )
+  .connect(connectionString, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useFindAndModify: true,
+  })
 
   .then((db) => console.log("Database is connected"))
   .catch((err) => console.log(err));

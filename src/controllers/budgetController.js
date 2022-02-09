@@ -19,7 +19,7 @@ export default {
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -33,9 +33,9 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   updateBudgetById: async (req, res, next) => {
@@ -48,9 +48,9 @@ export default {
       res.status(200).json(BudgetUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   deleteBudgetById: async (req, res, next) => {
@@ -59,9 +59,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activateBudgetById: async (req, res, next) => {
@@ -74,9 +74,9 @@ export default {
       res.status(200).json(BudgetUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 
@@ -90,9 +90,9 @@ export default {
       res.status(200).json(BudgetUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivateBudgetById: async (req, res, next) => {
@@ -105,9 +105,9 @@ export default {
       res.status(200).json(BudgetUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   sendEmailManually: async (req, res, next) => {
@@ -123,10 +123,10 @@ export default {
       });
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
 
-      next(error);
+      return next(error);
     }
   },
   uploadPDF: async (req, res, next) => {
@@ -138,10 +138,10 @@ export default {
       });
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
       console.log(error);
-      next(error);
+      return next(error);
     }
   },
 };

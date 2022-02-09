@@ -1,4 +1,4 @@
-import mongoose, { Schema } from "mongoose";
+import { Schema, model } from "mongoose";
 
 const SettingSchema = new Schema(
   {
@@ -71,6 +71,6 @@ const SettingSchema = new Schema(
   }
 );
 
-const Settings = mongoose.model("Settings", SettingSchema);
 
-export default Settings;
+module.exports = model("Settings", SettingSchema);
+

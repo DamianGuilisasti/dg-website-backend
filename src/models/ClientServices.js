@@ -17,7 +17,7 @@ const ClientsServicesSchema = new Schema(
       type: String,
       enum: ["Mensual", "Anual", "Fijo"],
       required: true,
-      default: 'Mensual'
+      default: "Mensual",
     },
     state: {
       type: Number,
@@ -30,6 +30,4 @@ const ClientsServicesSchema = new Schema(
   }
 );
 
-const ClientsServices = model("ClientsServices", ClientsServicesSchema);
-
-export default ClientsServices;
+module.exports = model("ClientsServices", ClientsServicesSchema);

@@ -13,7 +13,7 @@ export default {
 
     if (!userFound) {
       return res.status(404).send({
-        message: "No se encontró al usuario",
+        message: "User Not Found",
       });
     }
     const matchPassword = await User.comparePassword(
@@ -24,10 +24,10 @@ export default {
     if (!matchPassword)
       return res
         .status(401)
-        .json({ token: null, message: "Contraseña incorrecta" });
+        .json({ token: null, message: "Wrong Password" });
 
     const token = jwt.sign(
-      { id: userFound._id, rol: userFound.rol },
+      { id: userFound._id, name: userFound.name, rol: userFound.rol },
       config.SECRET,
       {
         expiresIn: 86400,
@@ -52,7 +52,7 @@ export default {
         });
         newUser.rol = foundRoles.map((rol) => rol._id);
       } else {
-        const role = await Roles.findOne({ name: "Cliente" });
+        const role = await Roles.findOne({ name: "Client" });
         newUser.rol = [role._id];
       }
 
@@ -65,7 +65,7 @@ export default {
       res.status(200).json(token);
     } catch (error) {
       console.log(error);
-      next(error);
+      return next(error);
     }
   },
   list: async (req, res, next) => {
@@ -77,7 +77,7 @@ export default {
       res.status(200).json(reg);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -101,7 +101,7 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next();
     }
@@ -123,7 +123,7 @@ export default {
       );
 
       if (!matchPassword) {
-        return res.status(401).json({ message: "Contraseña incorrecta" });
+        return res.status(401).json({ message: "Wrong Password" });
       }
 
       const userUpdated = await User.findByIdAndUpdate(
@@ -142,9 +142,9 @@ export default {
       res.status(200).json(userUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   update: async (req, res, next) => {
@@ -167,9 +167,9 @@ export default {
       res.status(200).json(userUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activate: async (req, res, next) => {
@@ -182,9 +182,9 @@ export default {
       res.status(200).json(userUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivate: async (req, res, next) => {
@@ -197,9 +197,9 @@ export default {
       res.status(200).json(userUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   delete: async (req, res, next) => {
@@ -208,9 +208,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   query: async (req, res, next) => {
@@ -221,9 +221,9 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   forgotPassword: async (req, res, next) => {
@@ -234,7 +234,7 @@ export default {
         try {
           let email = userFound.email;
           let name = userFound.name;
-          let subject = "Restablecer la contraseña | Damián Guilisasti";
+          let subject = "Restablecer la contraseña";
 
           let resetToken = await User.createPasswordResetToken();
           let passwordResetToken = await User.encryptPasswordResetToken(
@@ -252,27 +252,27 @@ export default {
           await nodemailer.resetPassword(email, name, subject, resetURL);
 
           res.status(200).send({
-            message: "Email enviado al cliente",
+            message: "Email Sent",
           });
         } catch (error) {
           res.status(500).send({
             message:
-              "There is an error when try to update db and send the email to restore de password.",
+              "There is an error when try to update db and send the email to restore de password",
           });
-          next(error);
+          return next(error);
         }
       } else {
         res.status(404).send({
-          message: "No se encontró un usuario con ese email.",
+          message: "User Not Found",
         });
-        next(error);
+        return next(error);
       }
     } catch (error) {
       res.status(500).send({
         message:
           "There is an error when try to update db and send the email to restore de password.",
       });
-      next(error);
+      return next(error);
     }
   },
 
@@ -290,7 +290,7 @@ export default {
 
       if (!user) {
         return res.status(404).send({
-          message: "There is not user with this email.",
+          message: "There is not user with this email",
         });
       }
 
@@ -312,7 +312,7 @@ export default {
       res.status(500).send({
         message: "There is an error when try to restore the password",
       });
-      next(error);
+      return next(error);
     }
   },
 };

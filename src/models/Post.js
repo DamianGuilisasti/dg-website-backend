@@ -1,27 +1,29 @@
-import mongoose, { Schema } from 'mongoose';
+import { Schema, model } from "mongoose";
 
-const PostsSchema = new Schema({
+const PostsSchema = new Schema(
+  {
     title: {
-        type: String
+      type: String,
     },
     category: {
-        type: String
+      type: String,
     },
     author: {
-        type: String
+      type: String,
     },
     tags: {
-        type: String
+      type: String,
     },
     state: {
-        type: Number, default: 1
-    }
-},
-    {
-        timestamps: true,
-        collection: 'Posts'
-    });
+      type: Number,
+      default: 1,
+    },
+  },
+  {
+    timestamps: true,
+    collection: "Posts",
+  }
+);
 
-const Posts = mongoose.model('Post', PostsSchema);
+module.exports = model("Post", PostsSchema);
 
-export default Posts;

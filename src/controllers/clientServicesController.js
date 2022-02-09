@@ -7,7 +7,7 @@ export default {
       res.status(200).json(result);
     } catch (e) {
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
       next(e);
     }
@@ -26,9 +26,9 @@ export default {
     } catch (error) {
       console.log(error);
       res.status(500).send({
-        message: "Ocurrió un error",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   updateServiceById: async (req, res, next) => {
@@ -41,9 +41,9 @@ export default {
       res.status(200).json(serviceUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   deleteServiceById: async (req, res, next) => {
@@ -52,9 +52,9 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   activateServiceById: async (req, res, next) => {
@@ -67,9 +67,9 @@ export default {
       res.status(200).json(serviceUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
   desactivateServiceById: async (req, res, next) => {
@@ -82,9 +82,9 @@ export default {
       res.status(200).json(serviceUpdated);
     } catch (error) {
       res.status(500).send({
-        message: "Ocurrió un error.",
+        message: "An error has occured",
       });
-      next(error);
+      return next(error);
     }
   },
 };
