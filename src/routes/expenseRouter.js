@@ -11,7 +11,7 @@ router.get(
 );
 router.post(
   "/",
-  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  /*  [verify.verifyToken.verify, verify.verifyRole.isAdmin], */
   expenseController.create
 );
 router.put(

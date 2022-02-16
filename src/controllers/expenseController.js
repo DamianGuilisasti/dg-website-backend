@@ -76,6 +76,7 @@ export default {
   },
   deleteExpenseById: async (req, res, next) => {
     try {
+      console.log(req.params.id);
       const reg = await Expense.findByIdAndDelete({ _id: req.query.id });
       res.status(204).json(reg);
     } catch (error) {

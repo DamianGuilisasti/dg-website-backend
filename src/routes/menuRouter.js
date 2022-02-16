@@ -4,11 +4,7 @@ import verify from "../middlewares";
 
 const router = express.Router();
 
-router.get(
-  "/",
-  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  menuController.list
-);
+router.get("/", menuController.list);
 router.post(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
@@ -33,6 +29,11 @@ router.delete(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   menuController.deleteMenuById
+);
+router.post(
+  "/saveNewOrder",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  menuController.saveNewOrder
 );
 
 export default router;

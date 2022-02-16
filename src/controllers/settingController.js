@@ -232,8 +232,6 @@ export default {
         }
       );
 
-      console.log(reg);
-
       await cloudinary.uploader.destroy(
         reg.companyImg.public_id,
         function (result, error) {

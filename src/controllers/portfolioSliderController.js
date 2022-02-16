@@ -65,6 +65,15 @@ export default {
   updateSliderById: async (req, res, next) => {
     try {
       if (req.body.newSliderImg == "true") {
+        const slider = await PortfolioSlider.findById({ _id: req.body._id });
+        await cloudinary.uploader.destroy(
+          slider.sliderImg.public_id,
+          function (result, error) {
+            if (error) {
+              console.log(error);
+            }
+          }
+        );
         const result = await cloudinary.uploader.upload(req.file.path);
         const sliderUpdated = await PortfolioSlider.findByIdAndUpdate(
           { _id: req.body._id },
@@ -77,6 +86,7 @@ export default {
           },
           { new: true }
         );
+        await fs.unlink(req.file.path);
         res.status(200).json(sliderUpdated);
       } else {
         const sliderUpdated = await PortfolioSlider.findByIdAndUpdate(

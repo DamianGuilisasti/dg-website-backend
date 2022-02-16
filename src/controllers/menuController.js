@@ -45,19 +45,19 @@ export default {
   },
   updateMenuById: async (req, res, next) => {
     try {
-      if (!req.body.name || !req.body.price) {
+      if (!req.body.name || !req.body.link) {
         res.status(400).send({
-          message: "Name is required",
+          message: "Name and link are required",
         });
         return;
       }
 
       if (
         typeof req.body.name !== "string" ||
-        typeof req.body.price !== "number"
+        typeof req.body.link !== "string"
       ) {
         res.status(400).send({
-          message: "Name and price must be a string and a number",
+          message: "Name and link must be strings",
         });
         return;
       }
@@ -109,6 +109,29 @@ export default {
       );
       res.status(204).json(MenuUpdated);
     } catch (error) {
+      res.status(500).send({
+        message: "An error has occured",
+      });
+      return next(error);
+    }
+  },
+  saveNewOrder: async (req, res, next) => {
+    try {
+      const { menus } = req.body;
+
+      if (!menus) {
+        res.status(400).send({
+          message: "Menus are required",
+        });
+        return;
+      }
+
+      await Menu.deleteMany({});
+      const MenuUpdated = await Menu.insertMany(menus);
+
+      res.status(204).json(MenuUpdated);
+    } catch (error) {
+      console.log(error);
       res.status(500).send({
         message: "An error has occured",
       });
