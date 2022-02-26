@@ -1,6 +1,6 @@
 import express from "express";
 import sliderController from "../controllers/portfolioSliderController";
-import upload from "../middlewares/upload";
+import uploadImage from "../middlewares/uploadImage";
 import verify from "../middlewares";
 
 const router = express.Router();
@@ -9,13 +9,13 @@ router.get("/", sliderController.list);
 router.post(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   sliderController.add
 );
 router.put(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   sliderController.updateSliderById
 );
 router.put(

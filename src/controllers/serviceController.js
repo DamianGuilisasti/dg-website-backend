@@ -3,6 +3,7 @@ import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
 import slugify from "slugify";
+const { httpError } = require("../helpers/handleError");
 
 dotenv.config();
 
@@ -17,11 +18,8 @@ export default {
     try {
       const result = await Service.find();
       res.status(200).json(result);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {
@@ -63,10 +61,7 @@ export default {
 
       res.status(200).json(serviceSaved);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   uploadimage: async (req, res, next) => {
@@ -89,10 +84,7 @@ export default {
       }
       res.status(200).json(images);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateServiceById: async (req, res, next) => {
@@ -134,10 +126,7 @@ export default {
 
       res.status(200).json(serviceUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   getService: async (req, res, next) => {
@@ -156,10 +145,7 @@ export default {
       const reg = await Service.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateServiceById: async (req, res, next) => {
@@ -171,10 +157,7 @@ export default {
       );
       res.status(200).json(serviceUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateServiceById: async (req, res, next) => {
@@ -186,10 +169,7 @@ export default {
       );
       res.status(200).json(serviceUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

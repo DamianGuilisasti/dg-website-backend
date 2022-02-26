@@ -1,6 +1,6 @@
 import express from "express";
 import logoController from "../controllers/logoController";
-import upload from "../middlewares/upload";
+import uploadImage from "../middlewares/uploadImage";
 import verify from "../middlewares";
 
 const router = express.Router();
@@ -9,7 +9,7 @@ router.get("/", logoController.list);
 router.post(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   logoController.add
 );
 router.put(

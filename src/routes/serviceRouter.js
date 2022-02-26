@@ -1,7 +1,7 @@
 import serviceController from "../controllers/serviceController";
 import express from "express";
 import verify from "../middlewares";
-import upload from "../middlewares/uploadMultipleFiles";
+import uploadMultipleFiles from "../middlewares/uploadMultipleFiles";
 
 const router = express.Router();
 
@@ -11,7 +11,7 @@ router.get("/service", serviceController.getService);
 router.post(
   "/uploadimage",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadMultipleFiles,
   serviceController.uploadimage
 );
 router.put(

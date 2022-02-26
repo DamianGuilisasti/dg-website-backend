@@ -1,7 +1,7 @@
 import express from "express";
 import reviewController from "../controllers/reviewController";
 import verify from "../middlewares";
-import upload from "../middlewares/upload";
+import uploadImage from "../middlewares/uploadImage";
 
 const router = express.Router();
 
@@ -19,7 +19,7 @@ router.post(
 router.post(
   "/uploadimage",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   reviewController.uploadimage
 );
 router.put(

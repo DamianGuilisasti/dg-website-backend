@@ -1,6 +1,7 @@
 import Budget from "../models/Budget";
 import mailer from "../config/mailer";
 import fs from "fs-extra";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   list: async (req, res, next) => {
@@ -17,11 +18,8 @@ export default {
         _id: 0,
       });
       res.status(200).json(result);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {
@@ -31,11 +29,7 @@ export default {
       const BudgetSaved = await newBudget.save();
       res.status(200).json(BudgetSaved);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateBudgetById: async (req, res, next) => {
@@ -47,10 +41,7 @@ export default {
       );
       res.status(200).json(BudgetUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteBudgetById: async (req, res, next) => {
@@ -58,10 +49,7 @@ export default {
       const reg = await Budget.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateBudgetById: async (req, res, next) => {
@@ -73,10 +61,7 @@ export default {
       );
       res.status(200).json(BudgetUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 
@@ -89,10 +74,7 @@ export default {
       );
       res.status(200).json(BudgetUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateBudgetById: async (req, res, next) => {
@@ -104,10 +86,7 @@ export default {
       );
       res.status(200).json(BudgetUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   sendEmailManually: async (req, res, next) => {
@@ -140,8 +119,7 @@ export default {
       res.status(500).send({
         message: "An error has occured",
       });
-      console.log(error);
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

@@ -1,6 +1,7 @@
 import express from "express";
 import sliderController from "../controllers/sliderController";
-import upload from "../middlewares/upload";
+import uploadImage from "../middlewares/uploadImage";
+import uploadVideo from "../middlewares/uploadVideo";
 import verify from "../middlewares";
 
 const router = express.Router();
@@ -9,13 +10,19 @@ router.get("/", sliderController.list);
 router.post(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
-  sliderController.add
+  uploadImage,
+  sliderController.create
+);
+router.post(
+  "/video",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  uploadVideo,
+  sliderController.createVideoSlider
 );
 router.put(
   "/",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   sliderController.updateSliderById
 );
 router.put(
@@ -34,9 +41,14 @@ router.delete(
   sliderController.deleteSliderById
 );
 router.post(
-  "/updateIndex",
+  "/setSlidersOrder",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  sliderController.updateIndex
+  sliderController.setSlidersOrder
+);
+router.put(
+  "/deleteBackgroundVideo",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  sliderController.deleteBackgroundVideo
 );
 
 export default router;

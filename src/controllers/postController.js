@@ -1,15 +1,13 @@
 import Post from "../models/Post";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   list: async (req, res, next) => {
     try {
       const result = await Post.find();
       res.status(200).json(result);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {

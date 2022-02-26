@@ -1,6 +1,6 @@
 import express from "express";
 import settingController from "../controllers/settingController";
-import upload from "../middlewares/upload";
+import uploadImage from "../middlewares/uploadImage";
 import verify from "../middlewares";
 
 const router = express.Router();
@@ -29,7 +29,7 @@ router.put(
 router.put(
   "/updateLogo",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   settingController.updateLogo
 );
 router.put(
@@ -45,8 +45,29 @@ router.put(
 router.put(
   "/updateCompanyImg",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   settingController.updateCompanyImg
+);
+router.put(
+  "/setSliderOverlayLevel",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  settingController.setSliderOverlayLevel
+);
+router.put(
+  "/activeBackgroundVideo",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  settingController.activeBackgroundVideo
+);
+router.put(
+  "/createBackgroundImageSlider",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  uploadImage,
+  settingController.createBackgroundImageSlider
+);
+router.put(
+  "/deleteBackgroundVideoImage",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  settingController.deleteBackgroundVideoImage
 );
 router.put(
   "/deleteCompanyImg",

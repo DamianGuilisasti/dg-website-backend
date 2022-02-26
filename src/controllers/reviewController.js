@@ -2,6 +2,7 @@ import Review from "../models/Review";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
+const { httpError } = require("../helpers/handleError");
 
 dotenv.config();
 
@@ -28,19 +29,15 @@ export default {
         });
       }
     } catch (error) {
-      console.log(error);
-      return next(error);
+      httpError(res, error, next);
     }
   },
   list: async (req, res, next) => {
     try {
       const result = await Review.find();
       res.status(200).json(result);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {
@@ -70,11 +67,7 @@ export default {
         res.status(200).json(reviewSaved);
       }
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   uploadimage: async (req, res, next) => {
@@ -83,10 +76,7 @@ export default {
       await fs.unlink(req.file.path);
       res.status(200).json(Logo);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateReviewById: async (req, res, next) => {
@@ -125,10 +115,7 @@ export default {
         return;
       }
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteReviewById: async (req, res, next) => {
@@ -136,10 +123,7 @@ export default {
       const reg = await Review.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateReviewById: async (req, res, next) => {
@@ -151,10 +135,7 @@ export default {
       );
       res.status(200).json(reviewUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateReviewById: async (req, res, next) => {
@@ -166,10 +147,7 @@ export default {
       );
       res.status(200).json(reviewUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

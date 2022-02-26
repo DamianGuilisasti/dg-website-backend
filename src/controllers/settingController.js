@@ -2,6 +2,7 @@ import Setting from "../models/Setting";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
+const { httpError } = require("../helpers/handleError");
 
 dotenv.config();
 
@@ -39,10 +40,7 @@ export default {
       res.status(200).json(newConfigurationSaved);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   listSettings: async (req, res, next) => {
@@ -51,10 +49,7 @@ export default {
       res.status(200).json(settings);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateInfo: async (req, res, next) => {
@@ -72,10 +67,7 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateSocialMedia: async (req, res, next) => {
@@ -97,10 +89,7 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateWhatsapp: async (req, res, next) => {
@@ -117,10 +106,7 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateLogo: async (req, res, next) => {
@@ -142,10 +128,7 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateCompanyImg: async (req, res, next) => {
@@ -167,10 +150,7 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateCompanyURL: async (req, res, next) => {
@@ -184,10 +164,57 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
+    }
+  },
+  setSliderOverlayLevel: async (req, res, next) => {
+    try {
+      const reg = await Setting.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          sliderOverlayLevel: req.body.sliderOverlayLevel,
+        }
+      );
+      res.status(200).json(reg);
+    } catch (error) {
+      console.log(error);
+      httpError(res, error, next);
+    }
+  },
+  activeBackgroundVideo: async (req, res, next) => {
+    try {
+      const reg = await Setting.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          isBackgroundVideoActivated: req.body.isBackgroundVideoActivated,
+        }
+      );
+      res.status(204).json(reg);
+    } catch (error) {
+      console.log(error);
+      httpError(res, error, next);
+    }
+  },
+  createBackgroundImageSlider: async (req, res, next) => {
+    try {
+      const result = await cloudinary.uploader.upload(req.file.path);
+
+      const reg = await Setting.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          backgroundVideoImage: {
+            public_id: result.public_id,
+            url: result.url,
+          },
+        }
+      );
+
+      await fs.unlink(req.file.path);
+
+      res.status(204).json(reg);
+    } catch (error) {
+      console.log(error);
+      httpError(res, error, next);
     }
   },
   deleteLogo: async (req, res, next) => {
@@ -214,12 +241,37 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
+  deleteBackgroundVideoImage: async (req, res, next) => {
+    try {
+      const reg = await Setting.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          backgroundVideoImage: {
+            public_id: "",
+            imageURL: "",
+          },
+        }
+      );
+
+      await cloudinary.uploader.destroy(
+        req.body.deleteBackgroundVideoImage,
+        function (result, error) {
+          if (error) {
+            console.log(error);
+          }
+        }
+      );
+
+      res.status(204).json(reg);
+    } catch (error) {
+      console.log(error);
+      httpError(res, error, next);
+    }
+  },
+
   deleteCompanyImg: async (req, res, next) => {
     try {
       const reg = await Setting.findByIdAndUpdate(
@@ -244,10 +296,7 @@ export default {
       res.status(200).json(reg);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
 };

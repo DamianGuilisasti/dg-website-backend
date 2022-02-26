@@ -1,6 +1,7 @@
 import CallToAction from "../models/CallToAction";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
+const { httpError } = require("../helpers/handleError");
 
 cloudinary.config({
   cloud_name: process.env.CLOUDINARY_NAME,
@@ -14,10 +15,7 @@ export default {
       const result = await CallToAction.find();
       res.status(200).json(result);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   create: async (req, res, next) => {
@@ -47,11 +45,7 @@ export default {
       const CallToActionSaved = await newCallToAction.save();
       res.status(201).json(CallToActionSaved);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateCallToActionById: async (req, res, next) => {
@@ -74,10 +68,7 @@ export default {
       );
       res.status(204).json(CallToActionUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateBackgroundImage: async (req, res, next) => {
@@ -109,10 +100,7 @@ export default {
       await fs.unlink(req.file.path);
       res.status(204).json(CallToActionUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteCallToActionById: async (req, res, next) => {
@@ -120,10 +108,7 @@ export default {
       const reg = await CallToAction.findByIdAndDelete({ _id: req.query.id });
       res.status(204).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteBackgroundImage: async (req, res, next) => {
@@ -152,10 +137,7 @@ export default {
 
       res.status(204).json(CallToActionUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateCallToActionById: async (req, res, next) => {
@@ -167,10 +149,7 @@ export default {
       );
       res.status(204).json(CallToActionUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateCallToActionById: async (req, res, next) => {
@@ -182,10 +161,7 @@ export default {
       );
       res.status(204).json(CallToActionUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

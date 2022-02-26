@@ -1,5 +1,6 @@
 import Client from "../models/Client";
 import Portfolio from "../models/Portfolio";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   list: async (req, res, next) => {
@@ -12,11 +13,8 @@ export default {
         description: 1,
       });
       res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {
@@ -49,10 +47,7 @@ export default {
       );
       res.status(200).json(clientUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateClientById: async (req, res, next) => {
@@ -64,10 +59,7 @@ export default {
       );
       res.status(200).json(clientUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateClientById: async (req, res, next) => {
@@ -79,10 +71,7 @@ export default {
       );
       res.status(200).json(clientUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   clientPaidById: async (req, res, next) => {
@@ -94,10 +83,7 @@ export default {
       );
       res.status(200).json(clientUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   clientNotPaidById: async (req, res, next) => {
@@ -109,10 +95,7 @@ export default {
       );
       res.status(200).json(clientUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteClientById: async (req, res, next) => {
@@ -131,10 +114,7 @@ export default {
           "El cliente tiene un Portfolio activo, elimine primero el portoflio.",
       });
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   getMonthlyPayments: async (req, res, next) => {

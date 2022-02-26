@@ -19,8 +19,8 @@ var youtubeURL = "";
 var companyImg = "";
 var companyName = "";
 var companyURL = "";
-var websiteURL = "https://damianguilisasti.com.ar/";
-var from = '"Damián Guilisasti" <hola@damianguilisasti.com.ar>';
+var websiteURL = "https://damianguilisasti.com.ar/"; //ver esto.
+var from = '"Damián Guilisasti" <hola@damianguilisasti.com.ar>'; //modificar esto.
 
 var url = {
   host: "localhost",
@@ -55,7 +55,7 @@ function showData(bodyData) {
     youtubeURL = bodyData.socialMedia.youtube;
     companyName = bodyData.companyName;
     companyImg = bodyData.companyImg.imageURL;
-    companyURL = bodyData.companyURL.imageURL;
+    companyURL = bodyData.companyURL;
   }
 }
 

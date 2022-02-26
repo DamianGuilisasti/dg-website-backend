@@ -3,6 +3,7 @@ import cloudinary from "cloudinary";
 import fs from "fs-extra";
 import dotenv from "dotenv";
 import slugify from "slugify";
+const { httpError } = require("../helpers/handleError");
 
 dotenv.config();
 
@@ -21,11 +22,8 @@ export default {
         lastname: 1,
       });
       res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   listActives: async (req, res, next) => {
@@ -39,11 +37,8 @@ export default {
         }
       );
       res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   getPortfolio: async (req, res, next) => {
@@ -119,10 +114,7 @@ export default {
 
       res.status(200).json(portfolioSaved);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   uploadimage: async (req, res, next) => {
@@ -145,10 +137,7 @@ export default {
       }
       res.status(200).json(images);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updatePortfolioById: async (req, res, next) => {
@@ -196,10 +185,7 @@ export default {
 
       res.status(200).json(portfolioUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activatePortfolioById: async (req, res, next) => {
@@ -211,10 +197,7 @@ export default {
       );
       res.status(200).json(portfolioUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivatePortfolioById: async (req, res, next) => {
@@ -226,10 +209,7 @@ export default {
       );
       res.status(200).json(portfolioUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 
@@ -238,10 +218,7 @@ export default {
       const reg = await Portfolio.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

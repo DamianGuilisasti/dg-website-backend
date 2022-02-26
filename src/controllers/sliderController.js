@@ -1,6 +1,8 @@
 import Slider from "../models/Slider";
+import Setting from "../models/Setting";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
+const { httpError } = require("../helpers/handleError");
 
 import dotenv from "dotenv";
 
@@ -13,32 +15,26 @@ cloudinary.config({
 });
 
 export default {
-  updateIndex: async (req, res, next) => {
+  setSlidersOrder: async (req, res, next) => {
     try {
       const sliders = req.body.sliders;
 
       await Slider.deleteMany({});
       await Slider.insertMany(sliders);
-      res.status(200).json(sliders);
+      res.status(204).json(sliders);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   list: async (req, res, next) => {
     try {
       const result = await Slider.find();
       res.status(200).json(result);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
-  add: async (req, res, next) => {
+  create: async (req, res, next) => {
     try {
       const { title, subtitle, buttonText, buttonURL } = req.body;
       const result = await cloudinary.uploader.upload(req.file.path);
@@ -53,13 +49,40 @@ export default {
 
       const sliderSaved = await newSlider.save();
       await fs.unlink(req.file.path);
-      res.status(200).json(sliderSaved);
+      res.status(204).json(sliderSaved);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
+      httpError(res, error, next);
+    }
+  },
+  createVideoSlider: async (req, res, next) => {
+    try {
+      const settings = await Setting.find();
+
+      const result = await cloudinary.v2.uploader.upload(req.file.path, {
+        resource_type: "video",
+        chunk_size: 6000000,
+/*         eager: [
+          { width: 300, height: 300, crop: "pad", audio_codec: "none" },
+          {
+            width: 160,
+            height: 100,
+            crop: "crop",
+            gravity: "south",
+            audio_codec: "none",
+          },
+        ], */
+        eager_async: true,
       });
-      next();
+
+      const settingsUpdated = await Setting.findByIdAndUpdate(settings[0]._id, {
+        videobackground: { public_id: result.public_id, url: result.url },
+      });
+
+      await fs.unlink(req.file.path);
+      res.status(204).json(settingsUpdated);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   updateSliderById: async (req, res, next) => {
@@ -88,7 +111,7 @@ export default {
         );
         await fs.unlink(req.file.path);
 
-        res.status(200).json(sliderUpdated);
+        res.status(204).json(sliderUpdated);
       } else {
         const sliderUpdated = await Slider.findByIdAndUpdate(
           { _id: req.body._id },
@@ -100,13 +123,10 @@ export default {
           },
           { new: true }
         );
-        res.status(200).json(sliderUpdated);
+        res.status(204).json(sliderUpdated);
       }
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteSliderById: async (req, res, next) => {
@@ -115,17 +135,51 @@ export default {
       await cloudinary.uploader.destroy(
         reg.sliderImg.public_id,
         function (result, error) {
+          if (result) {
+            console.log(result);
+          }
           if (error) {
             console.log(error);
           }
         }
       );
-      res.status(200).json(reg);
+      res.status(204).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
+    }
+  },
+  deleteBackgroundVideo: async (req, res, next) => {
+    try {
+      const { deleteBackgroundVideo } = req.body;
+
+      await cloudinary.v2.api.delete_resources(
+        deleteBackgroundVideo,
+        { resource_type: "video" },
+        function (result, error) {
+          if (result) {
+            console.log(result);
+          }
+          if (error) {
+            console.log(error);
+            return;
+          }
+        }
+      );
+
+      const settingUpdated = await Setting.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          videobackground: {
+            public_id: "",
+            url: "",
+          },
+        },
+        { new: true }
+      );
+
+      res.status(204).json(settingUpdated);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   activateSliderById: async (req, res, next) => {
@@ -137,10 +191,7 @@ export default {
       );
       res.status(200).json(sliderUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateSliderById: async (req, res, next) => {
@@ -152,10 +203,7 @@ export default {
       );
       res.status(200).json(sliderUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== "production") {
 
 // Database Connection
 
-require("./database");
+require("./config/database");
 
 // Inicializations
 

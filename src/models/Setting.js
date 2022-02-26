@@ -64,6 +64,30 @@ const SettingSchema = new Schema(
     companyURL: {
       type: String,
     },
+    sliderOverlayLevel: {
+      type: Number,
+      default: 6,
+    },
+    videobackground: {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
+    isBackgroundVideoActivated: {
+      type: Boolean,
+      default: false,
+    },
+    backgroundVideoImage: {
+      public_id: {
+        type: String,
+      },
+      url: {
+        type: String,
+      },
+    },
   },
   {
     timestamps: true,
@@ -71,6 +95,4 @@ const SettingSchema = new Schema(
   }
 );
 
-
 module.exports = model("Settings", SettingSchema);
-

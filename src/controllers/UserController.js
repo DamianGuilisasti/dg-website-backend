@@ -4,37 +4,40 @@ import config from "../config";
 import Roles from "../models/Rol";
 import nodemailer from "../config/mailer";
 import crypto from "crypto";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   login: async (req, res, next) => {
-    const { email, password } = req.body;
+    try {
+      const { email, password } = req.body;
 
-    const userFound = await User.findOne({ email: email }).populate("rol");
+      const userFound = await User.findOne({ email: email }).populate("rol");
 
-    if (!userFound) {
-      return res.status(404).send({
-        message: "User Not Found",
-      });
-    }
-    const matchPassword = await User.comparePassword(
-      password,
-      userFound.password
-    );
-
-    if (!matchPassword)
-      return res
-        .status(401)
-        .json({ token: null, message: "Wrong Password" });
-
-    const token = jwt.sign(
-      { id: userFound._id, name: userFound.name, rol: userFound.rol },
-      config.SECRET,
-      {
-        expiresIn: 86400,
+      if (!userFound) {
+        return res.status(404).send({
+          message: "User Not Found",
+        });
       }
-    );
+      const matchPassword = await User.comparePassword(
+        password,
+        userFound.password
+      );
 
-    res.status(200).json({ token });
+      if (!matchPassword)
+        return res.status(401).json({ token: null, message: "Wrong Password" });
+
+      const token = jwt.sign(
+        { id: userFound._id, name: userFound.name, rol: userFound.rol },
+        config.SECRET,
+        {
+          expiresIn: 86400,
+        }
+      );
+
+      res.status(200).json({ token });
+    } catch (error) {
+      httpError(res, error, next);
+    }
   },
   register: async (req, res, next) => {
     try {
@@ -64,8 +67,7 @@ export default {
 
       res.status(200).json(token);
     } catch (error) {
-      console.log(error);
-      return next(error);
+      httpError(res, error, next);
     }
   },
   list: async (req, res, next) => {
@@ -75,11 +77,8 @@ export default {
         _id: 1,
       });
       res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {
@@ -141,10 +140,7 @@ export default {
 
       res.status(200).json(userUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   update: async (req, res, next) => {
@@ -166,10 +162,7 @@ export default {
 
       res.status(200).json(userUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activate: async (req, res, next) => {
@@ -181,10 +174,7 @@ export default {
       );
       res.status(200).json(userUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivate: async (req, res, next) => {
@@ -196,10 +186,7 @@ export default {
       );
       res.status(200).json(userUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   delete: async (req, res, next) => {
@@ -207,10 +194,7 @@ export default {
       const reg = await User.findByIdAndDelete({ _id: req.query.id });
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   query: async (req, res, next) => {
@@ -219,11 +203,7 @@ export default {
       const userFound = await User.findOne({ _id: userId }).populate("rol");
       res.status(200).json(userFound);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   forgotPassword: async (req, res, next) => {

@@ -1,6 +1,7 @@
 import PortfolioSlider from "../models/PortfolioSlider";
 import cloudinary from "cloudinary";
 import fs from "fs-extra";
+const { httpError } = require("../helpers/handleError");
 
 import dotenv from "dotenv";
 
@@ -21,21 +22,15 @@ export default {
       await PortfolioSlider.insertMany(sliders);
       res.status(200).json(sliders);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   list: async (req, res, next) => {
     try {
       const result = await PortfolioSlider.find();
       res.status(200).json(result);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   add: async (req, res, next) => {
@@ -56,10 +51,7 @@ export default {
       res.status(200).json(sliderSaved);
     } catch (error) {
       console.log(error);
-      res.status(500).json({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateSliderById: async (req, res, next) => {
@@ -102,10 +94,7 @@ export default {
         res.status(200).json(sliderUpdated);
       }
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteSliderById: async (req, res, next) => {
@@ -125,10 +114,7 @@ export default {
 
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateSliderById: async (req, res, next) => {
@@ -140,10 +126,7 @@ export default {
       );
       res.status(200).json(sliderUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateSliderById: async (req, res, next) => {
@@ -155,10 +138,7 @@ export default {
       );
       res.status(200).json(sliderUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

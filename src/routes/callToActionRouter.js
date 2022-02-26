@@ -1,7 +1,7 @@
 import express from "express";
 import callToActionController from "../controllers/callToActionController";
 import verify from "../middlewares";
-import upload from "../middlewares/upload";
+import uploadImage from "../middlewares/uploadImage";
 
 const router = express.Router();
 
@@ -23,7 +23,7 @@ router.put(
 router.put(
   "/background",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
-  upload,
+  uploadImage,
   callToActionController.updateBackgroundImage
 );
 router.put(

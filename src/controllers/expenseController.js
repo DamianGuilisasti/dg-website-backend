@@ -1,4 +1,5 @@
 import Expense from "../models/Expense";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   list: async (req, res, next) => {
@@ -6,10 +7,7 @@ export default {
       const result = await Expense.find();
       res.status(200).json(result);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   create: async (req, res, next) => {
@@ -36,11 +34,7 @@ export default {
       const expenseSaved = await newExpense.save();
       res.status(201).json(expenseSaved);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateExpenseById: async (req, res, next) => {
@@ -68,10 +62,7 @@ export default {
       );
       res.status(204).json(expenseUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteExpenseById: async (req, res, next) => {
@@ -80,10 +71,7 @@ export default {
       const reg = await Expense.findByIdAndDelete({ _id: req.query.id });
       res.status(204).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateExpenseById: async (req, res, next) => {
@@ -95,10 +83,7 @@ export default {
       );
       res.status(204).json(expenseUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateExpenseById: async (req, res, next) => {
@@ -110,10 +95,7 @@ export default {
       );
       res.status(204).json(expenseUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

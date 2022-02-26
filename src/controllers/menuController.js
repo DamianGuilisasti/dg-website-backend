@@ -1,4 +1,5 @@
 import Menu from "../models/Menu";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   list: async (req, res, next) => {
@@ -6,10 +7,7 @@ export default {
       const result = await Menu.find();
       res.status(200).json(result);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   create: async (req, res, next) => {
@@ -36,11 +34,7 @@ export default {
       const MenuSaved = await newMenu.save();
       res.status(201).json(MenuSaved);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updateMenuById: async (req, res, next) => {
@@ -68,10 +62,7 @@ export default {
       );
       res.status(204).json(MenuUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   deleteMenuById: async (req, res, next) => {
@@ -79,10 +70,7 @@ export default {
       const reg = await Menu.findByIdAndDelete({ _id: req.query.id });
       res.status(204).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activateMenuById: async (req, res, next) => {
@@ -94,10 +82,7 @@ export default {
       );
       res.status(204).json(MenuUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivateMenuById: async (req, res, next) => {
@@ -109,10 +94,7 @@ export default {
       );
       res.status(204).json(MenuUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   saveNewOrder: async (req, res, next) => {
@@ -131,11 +113,7 @@ export default {
 
       res.status(204).json(MenuUpdated);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };

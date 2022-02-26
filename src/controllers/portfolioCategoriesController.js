@@ -1,15 +1,13 @@
 import PortfolioCategoriesCategories from "../models/PortfolioCategories";
+const { httpError } = require("../helpers/handleError");
 
 export default {
   list: async (req, res, next) => {
     try {
       const reg = await PortfolioCategoriesCategories.find();
       res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   listActives: async (req, res, next) => {
@@ -22,11 +20,8 @@ export default {
         lastname: 1,
       });
       res.status(200).json(reg);
-    } catch (e) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next(e);
+    } catch (error) {
+      httpError(res, error, next);
     }
   },
   getPortfolioCategories: async (req, res, next) => {
@@ -70,10 +65,7 @@ export default {
 
       res.status(200).json(PortfolioCategoriesSaved);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   uploadimage: async (req, res, next) => {
@@ -96,10 +88,7 @@ export default {
       }
       res.status(200).json(images);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   updatePortfolioCategoriesById: async (req, res, next) => {
@@ -117,10 +106,7 @@ export default {
 
       res.status(200).json(PortfolioCategoriesUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   activatePortfolioCategoriesById: async (req, res, next) => {
@@ -133,10 +119,7 @@ export default {
         );
       res.status(200).json(PortfolioCategoriesUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
   desactivatePortfolioCategoriesById: async (req, res, next) => {
@@ -149,10 +132,7 @@ export default {
         );
       res.status(200).json(PortfolioCategoriesUpdated);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 
@@ -163,10 +143,7 @@ export default {
       });
       res.status(200).json(reg);
     } catch (error) {
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      return next(error);
+      httpError(res, error, next);
     }
   },
 };
