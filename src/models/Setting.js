@@ -88,6 +88,12 @@ const SettingSchema = new Schema(
         type: String,
       },
     },
+    primaryColor: {
+      type: String,
+    },
+    secondaryColor: {
+      type: String,
+    },
   },
   {
     timestamps: true,

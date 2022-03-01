@@ -65,6 +65,11 @@ router.put(
   settingController.createBackgroundImageSlider
 );
 router.put(
+  "/updateColor",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  settingController.updateColor
+);
+router.put(
   "/deleteBackgroundVideoImage",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   settingController.deleteBackgroundVideoImage
