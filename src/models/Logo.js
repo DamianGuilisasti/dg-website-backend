@@ -5,9 +5,11 @@ const sliderSchema = new Schema(
     logoImg: {
       public_id: {
         type: String,
+        default: "",
       },
       url: {
         type: String,
+        default: "",
       },
     },
   },

@@ -98,11 +98,7 @@ export default {
       const userSaved = await newUser.save();
       res.status(200).json(userSaved);
     } catch (error) {
-      console.log(error);
-      res.status(500).send({
-        message: "An error has occured",
-      });
-      next();
+      httpError(res, error, next);
     }
   },
   updateInEditAccount: async (req, res, next) => {

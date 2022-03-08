@@ -6,9 +6,11 @@ const ExpensesSchema = new Schema(
       type: String,
       maxlength: 50,
       required: true,
+      default: "",
     },
     price: {
       type: Number,
+      default: 0,
     },
     state: {
       type: Number,

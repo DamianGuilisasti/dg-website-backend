@@ -4,6 +4,7 @@ const PortfolioCategoriesSchema = new Schema(
   {
     name: {
       type: String,
+      default: "",
     },
     state: {
       type: Number,

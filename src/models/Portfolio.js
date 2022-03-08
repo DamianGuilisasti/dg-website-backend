@@ -16,38 +16,48 @@ const PortfolioSchema = new Schema(
       type: String,
       unique: true,
       required: true,
+      default: "",
     },
     slug: {
       type: String,
       unique: true,
       required: true,
+      default: "",
     },
     description: {
       type: String,
+      default: "",
     },
     problem: {
       type: String,
+      default: "",
     },
     solution: {
       type: String,
+      default: "",
     },
     link: {
       type: String,
+      default: "",
     },
     clientReview: {
       type: String,
+      default: "",
     },
     portfolioimages: [
       {
         public_id: {
           type: String,
+          default: "",
         },
         url: {
           type: String,
           required: true,
+          default: "",
         },
         index: {
           type: String,
+          default: "",
         },
       },
     ],

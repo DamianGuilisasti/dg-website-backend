@@ -4,15 +4,19 @@ const PostsSchema = new Schema(
   {
     title: {
       type: String,
+      default: "",
     },
     category: {
       type: String,
+      default: "",
     },
     author: {
       type: String,
+      default: "",
     },
     tags: {
       type: String,
+      default: "",
     },
     state: {
       type: Number,
@@ -26,4 +30,3 @@ const PostsSchema = new Schema(
 );
 
 module.exports = model("Post", PostsSchema);
-

@@ -4,6 +4,7 @@ const rolSchema = new Schema(
   {
     name: {
       type: String,
+      default: "",
     },
   },
   {

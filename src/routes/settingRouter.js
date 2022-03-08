@@ -70,6 +70,11 @@ router.put(
   settingController.updateColor
 );
 router.put(
+  "/updateFont",
+  [verify.verifyToken.verify, verify.verifyRole.isAdmin],
+  settingController.updateFont
+);
+router.put(
   "/deleteBackgroundVideoImage",
   [verify.verifyToken.verify, verify.verifyRole.isAdmin],
   settingController.deleteBackgroundVideoImage

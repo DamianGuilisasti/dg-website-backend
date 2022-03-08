@@ -124,6 +124,20 @@ export default {
       httpError(res, error, next);
     }
   },
+  updateFont: async (req, res, next) => {
+    try {
+      const reg = await Setting.findByIdAndUpdate(
+        { _id: req.body._id },
+        {
+          fontFamily: req.body.fontFamily,
+        }
+      );
+      res.status(204).json(reg);
+    } catch (error) {
+      console.log(error);
+      httpError(res, error, next);
+    }
+  },
   updateLogo: async (req, res, next) => {
     try {
       const result = await cloudinary.uploader.upload(req.file.path);

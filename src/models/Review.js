@@ -5,21 +5,26 @@ const ReviewsSchema = new Schema(
     author: {
       type: String,
       required: true,
+      default: "",
     },
     company: {
       type: String,
       required: true,
+      default: "",
     },
     text: {
       type: String,
       required: true,
+      default: "",
     },
     logo: {
       public_id: {
         type: String,
+        default: "",
       },
       url: {
         type: String,
+        default: "",
       },
     },
 

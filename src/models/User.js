@@ -6,29 +6,36 @@ const UserSchema = new Schema(
   {
     name: {
       type: String,
+      default: "",
     },
     lastname: {
       type: String,
+      default: "",
     },
     username: {
       type: String,
       unique: true,
       required: true,
+      default: "",
     },
     email: {
       type: String,
       unique: true,
       required: true,
+      default: "",
     },
     password: {
       type: String,
       required: true,
+      default: "",
     },
     passwordResetToken: {
       type: String,
+      default: "",
     },
     passwordResetExpires: {
       type: Date,
+      default: "",
     },
     rol: [
       {
